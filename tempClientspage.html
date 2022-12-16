@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/clientspage.css" />
+    <link rel="stylesheet" href="/css/homepage.css" />
+    <style></style>
+    <title>Khách Hàng</title>
+  </head>
+  <body>
+    <div class="topnav" id="myTopnav">
+      <a href="http://localhost:3000/homepage"">Trang Chủ</a>
+      <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
+      <a href="http://localhost:3000/sellpage" >Bán Thuốc</a>
+      <a href="http://localhost:3000/importpage">Nhập Kho Thuốc</a>
+      <a href="http://localhost:3000/clientspage" class="active">Khách Hàng </a>
+      <a href="http://localhost:3000/userspage">Tài Khoản</a>
+      <a href="http://localhost:3000/statisticalpage">Thống Kê</a>
+      <div class="dropdown" style="float: right">
+        <button class="dropbtn">
+          <% if (currentUser) { %>
+          <%=currentUser[0].TaiKhoan%>
+          <% } else {%>
+            anonymous
+          <% } %>
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="logout dropdown-content">
+          <a  href="http://localhost:3000">Log out</a>
+        </div>
+      </div>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <!--__________________________________________________-->
+    <!-- 
+      
+     -->
+<div class="main" style="margin-top: 60px; padding: 0 24px">
+  <br>
+  <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Thêm khách hàng mới</button>
+  <div id="id01" class="modal">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" action="http://localhost:3000/clientspage/">
+      <div class="container">
+        <h1>Thêm khách hàng</h1>
+        <p>Điền thông tin vào form</p>
+        <hr>
+        <label for="TenKhachHang"><b>Họ và tên</b></label>
+        <input id = "client_name" type="text" placeholder="Điền họ và tên" name="email" required>
+  
+        <label for="DienThoai"><b>Điện thoại</b></label>
+        <input id="client_numberphone" type="text" placeholder="Điền số điện thoại" name="psw" required>
+  
+        <label for="Email"><b>Email</b></label>
+        <input id="client_email" type="email" placeholder="Điền email" name="psw-repeat" required>
+        
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Hủy</button>
+          <button type="submit" class="signupbtn">Thêm</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!---->
+  <h1>Danh sách khách hàng</h1>
+  <table id="customers">
+    <tr>
+      <th style="width: 30%">Tên khách hàng</th>
+      <th style="width: 25%">Điện thoại</th>
+      <th style="width: 25%">Email</th>
+      <th>Tùy chỉnh</th>
+    </tr>
+  
+    <%for(let i = 0; i < listItem.length; i++) { %>
+      <tr>
+        <td><%=listItem[i].TenKhachHang %></td>
+        <td><%=listItem[i].DienThoai %></td>
+        <td><%=listItem[i].Email %></td>
+        <td class="actions">
+          <button type="button">Chi tiết</button>
+          <button type="button">Chỉnh sửa</button>
+          <button type="button">Xóa</button>
+        </td>
+      </tr>
+    <% } %>
+  </table>
+</div>
+
+    <script>
+      const submitbtn = document.getElementsByClassName("signupbtn")[0];
+      const nameInput = document.getElementById("client_name");
+      const numberphoneInput = document.getElementById("client_numberphone");
+      const emailInput = document.getElementById("client_email");
+      const logoutBtn = document.getElementsByClassName("logout")[0]
+      const dropbtn = document.getElementsByClassName("dropbtn")[0];
+      console.log(dropbtn.textContent.trim())
+
+      console.log(logoutBtn)
+
+
+
+      // window.addEventListener("click", async () => {
+      //   let response = await fetch(
+      //     `http://localhost:3000/userspage/users/${dropbtn.textContent.trim()}`
+      //   );
+      //   console.log("check")
+      //   let data = await response.json();
+      //   let { result } = data;
+      //   if (result[0].IsLogin == 0) {
+      //     alert("Bạn chưa đăng nhập, xin vui lòng đăng nhập lại");
+      //   window.location = "http://localhost:3000/";
+      //   }
+      // })
+
+
+      if (dropbtn.textContent.trim() == "anonymous") {
+        alert("Bạn chưa đăng nhập, xin vui lòng đăng nhập lại");
+        window.location = "http://localhost:3000/";
+      }
+      
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+
+      submitbtn.addEventListener('click', () => {
+        if(nameInput.value&&numberphoneInput.value&&emailInput.value) {
+          fetch("http://localhost:3000/clientpage/clients", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({TenKhachHang: nameInput.value, DienThoai: numberphoneInput.value, Email: emailInput.value})
+          })
+          .then(function(res){ console.log(res) })
+          .catch(function(res){ console.log(res) })
+          window.location = "http://localhost:3000/clientspage";
+        }
+      })
+
+      logoutBtn.addEventListener("click", async () => {
+          await fetch(
+            `http://localhost:3000/userspage/users/${dropbtn.textContent.trim()}/0`
+          );
+      })
+
+    </script>
+  </body>
+
+
+  <style>
+    #customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
+table button {
+  cursor: pointer;
+  padding: 4px 4px;
+  width: 80px;
+}
+
+/*---------------------------------------------------------------- */
+
+input[type="text"],
+input[type="email"] {
+  width: 99%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type="text"]:focus,
+input[type="email"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04aa6d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity: 1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn,
+.signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn,
+  .signupbtn {
+    width: 100%;
+  }
+}
+
+
+  </style>
+</html>

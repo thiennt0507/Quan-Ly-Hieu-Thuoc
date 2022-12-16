@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <title>Đăng nhập</title>
+  </head>
+  <body>
+    <form action="/action_page.php">
+      <div class="imgcontainer">
+        <img
+          src="/img/img_avatar2.png"
+          alt="Avatar"
+          class="avatar"
+          style="width: 25%"
+        />
+      </div>
+
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input
+          id="username"
+          type="text"
+          placeholder="Enter Username"
+          name="uname"
+          required
+        />
+
+        <label for="psw"><b>Password</b></label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter Password"
+          autocomplete="on"
+          name="psw"
+          required
+        />
+
+        <button id="button" type="button">Login</button>
+      </div>
+    </form>
+    <script>
+      const userNameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      const button = document.getElementById("button");
+
+      (async () => {
+        let response = await fetch("http://localhost:3000/loginpage", {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        });
+
+        data = await response.json();
+        if (data.length == 0) {
+          window.location = "http://localhost:3000/homepage";
+        }
+      })();
+
+      button.addEventListener("click", async () => {
+        let response = await fetch(
+          `http://localhost:3000/userspage/users/${userNameInput.value.trim()}`
+        );
+
+        let data = await response.json();
+        let { result } = data;
+
+        if (result.length == 0) return;
+        if (
+          result[0].TaiKhoan === userNameInput.value.trim() &&
+          result[0].MatKhau === passwordInput.value.trim()
+        ) {
+          await fetch(
+            `http://localhost:3000/userspage/users/${userNameInput.value.trim()}/1`
+          );
+          window.location = "http://localhost:3000/homepage";
+        }
+      });
+    </script>
+  </body>
+</html>

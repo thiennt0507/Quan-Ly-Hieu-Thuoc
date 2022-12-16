@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.6"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "name": "web_quan_li_hieu_thuoc",
+  "version": "1.0.0",
+  "description": "\"Html, css, js, nodejs\"",
+  "main": "app.js",
+  "author": "Nguuyen Thien",
+  "license": "ISC"
+}
