@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
     IDThuoc INT PRIMARY KEY AUTO_INCREMENT,
     MaThuoc VARCHAR(50) NOT NULL,
     TenThuoc VARCHAR(100) NOT NULL,
+    NSX VARCHAR(100) NOT NULL,
     NhomThuoc VARCHAR(100) NOT NULL,
-    IDNhaPhanPhoi INT NOT NULL,
     SoLuong INT NOT NULL,
     GiaBan DECIMAL(15, 4) NOT NULL,
     DonVi VARCHAR(50) NOT NULL,
@@ -36,8 +36,7 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
     CongDung VARCHAR(500) NOT NULL,
     PhanTacDung VARCHAR(500) NULL,
     DangBaoChe VARCHAR(500) NOT NULL,
-    BaoQuan VARCHAR(500) NOT NULL,
-    FOREIGN KEY(IDNhaPhanPhoi) REFERENCES QuanLyHieuThuoc.NhaPhanPHoi(IDNhaPhanPhoi)
+    BaoQuan VARCHAR(500) NOT NULL
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.KhachHang(
     IDKhachHang INT PRIMARY KEY AUTO_INCREMENT,
     TenKhachHang VARCHAR(100) NOT NULL,
@@ -74,7 +73,6 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
     SoLuong INT NOT NULL,
     GiaBan DECIMAL(15, 4) NOT NULL,
     Thue FLOAT NOT NULL,
-    DonVi VARCHAR(50) NOT NULL,
     FOREIGN KEY(IDHoaDonXuat) REFERENCES QuanLyHieuThuoc.HoaDonXuat(IDHoaDonXuat),
     FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc)
 );

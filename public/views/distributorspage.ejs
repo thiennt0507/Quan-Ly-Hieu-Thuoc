@@ -4,21 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--  -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="/css/homepage.css" />
-    <link rel="stylesheet" href="/css/userspage.css">
+    <link rel="stylesheet" href="/css/distributorspage.css" />
     <style></style>
-    <title>Tài Khoản</title>
+    <title>Nhập kho thuốc</title>
   </head>
   <body>
     <div class="topnav" id="myTopnav">
@@ -27,8 +29,8 @@
       <a href="http://localhost:3000/sellpage" >Bán Thuốc</a>
       <a href="http://localhost:3000/importpage">Nhập Kho Thuốc</a>
       <a href="http://localhost:3000/clientspage">Khách Hàng </a>
-      <a href="http://localhost:3000/userspage" class="active">Tài Khoản</a>
-      <a href="http://localhost:3000/distributorspage">Nhà Phân Phối</a>
+      <a href="http://localhost:3000/userspage">Tài Khoản</a>
+      <a href="http://localhost:3000/distributorspage" class="active">Nhà Phân Phối</a>
       <a href="http://localhost:3000/statisticalpage">Thống Kê</a>
       <input
       id="search"
@@ -55,16 +57,18 @@
     </div>
 
     <div class="main" style="margin-top: 66px">
+      <div class="container-xl">
+      </div>
       <div class="table-responsive">
         <div class="table-wrapper">
           <div class="table-title">
             <div class="row">
               <div class="col-sm-6">
-                <h2>Quản lý <b>Nhân viên</b></h2>
+                <h2>Quản lý <b>Nhà Phân Phối</b></h2>
               </div>
               <div class="col-sm-6">
-                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm nhân viên</span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa nhân viên</span></a>						
+                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm nhà phân phôi</span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa nhà phân phối</span></a>						
               </div>
             </div>
           </div>
@@ -78,34 +82,32 @@
                   </span>
                 </th>
                 <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
                 <th>Address</th>
-                <th>Birth</th>
                 <th>Phone</th>
+                <th>Fax</th>
+                <th>Email</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <% for (let i = 0; i < users.length; i++) { %>
-              <tr>
-                <td>
-                  <span class="custom-checkbox">
-                    <input type="checkbox" id=<%="checkbox" + users[i].IDTaiKhoan %> name="options[]" value="1">
-                    <label for="checkbox1"></label>
-                  </span>
-                </td>
-                <td><%=users[i].HoTen%></td>
-                <td><%=users[i].TaiKhoan%></td>
-                <td><%=users[i].Email%></td>
-                <td><%=users[i].DiaChi%></td>
-                <td><%=new Date(users[i].NgaySinh).toISOString()%></td>
-                <td><%=users[i].DienThoai%></td>
-                <td>
-                  <a href="#editEmployeeModal" class="edit" id=<%="edit" + users[i].IDTaiKhoan %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                  <a href="#deleteEmployeeModal" class="delete" id=<%="delete" + users[i].IDTaiKhoan %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                </td>
-              </tr>
+              <% for(let i = 0; i < distributors.length; i++) { %> 
+                <tr class="row-client">
+                  <td>
+                    <span class="custom-checkbox">
+                      <input type="checkbox" id=<%="checkbox" + distributors[i].IDNhaPhanPhoi %> name="options[]" value="1">
+                      <label for=<%="checkbox" + distributors[i].IDNhaPhanPhoi %>></label>
+                    </span>
+                  </td>
+                  <td><%=distributors[i].TenNPP%></td>
+                  <td><%=distributors[i].DiaChi%></td>
+                  <td><%=distributors[i].DienThoai%></td>
+                  <td><%=distributors[i].Fax%></td>
+                  <td><%=distributors[i].Email%></td>
+                  <td>
+                    <a href="#editEmployeeModal" class="edit" id=<%="edit" + distributors[i].IDNhaPhanPhoi %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="#deleteEmployeeModal" class="delete" id=<%="delete" + distributors[i].IDNhaPhanPhoi %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  </td>
+                </tr>
               <% } %>
             </tbody>
           </table>
@@ -117,42 +119,29 @@
           <div class="modal-content">
             <form>
               <div class="modal-header">						
-                <h4 class="modal-title">Add Employee</h4>
+                <h4 class="modal-title">Thêm nhà phân phối</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div class="modal-body">					
                 <div class="form-group">
                   <label>Name</label>
                   <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label>Username</label>
+                </div><div class="form-group">
+                  <label>Address</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Password</label>
+                  <label>Phone</label>
+                  <input type="text" class="form-control" required>
+                </div>	
+                <div class="form-group">
+                  <label>Fax</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
                   <label>Email</label>
                   <input type="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label>Address</label>
-                  <input class="form-control" required></input>
-                </div>
-                <div class="form-group">
-                  <label>Birth</label>
-                  <input type="date" class="form-control" required></input>
-                </div>
-                <div class="form-group">
-                  <label>Phone</label>
-                  <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label>Role</label>
-                  <input type="input" placeholder="Admin or Staff" class="form-control"required>
-                </div>					
+                </div>				
               </div>
               <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -168,42 +157,29 @@
           <div class="modal-content">
             <form>
               <div class="modal-header">						
-                <h4 class="modal-title">Chỉnh sửa nhân viên</h4>
+                <h4 class="modal-title">Chỉnh sửa nhà phân phối</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div class="modal-body">					
                 <div class="form-group">
                   <label>Name</label>
                   <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label>Username</label>
+                </div><div class="form-group">
+                  <label>Address</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Password</label>
+                  <label>Phone</label>
+                  <input type="text" class="form-control" required>
+                </div>	
+                <div class="form-group">
+                  <label>Fax</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
                   <label>Email</label>
                   <input type="email" class="form-control" required>
                 </div>
-                <div class="form-group">
-                  <label>Address</label>
-                  <input class="form-control" required></input>
-                </div>
-                <div class="form-group">
-                  <label>Birth</label>
-                  <input type="date" class="form-control" required></input>
-                </div>
-                <div class="form-group">
-                  <label>Phone</label>
-                  <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label>Role</label>
-                  <input type="input" placeholder="Admin or Staff" class="form-control"required>
-                </div>					
               </div>
               <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -219,7 +195,7 @@
           <div class="modal-content">
             <form>
               <div class="modal-header">						
-                <h4 class="modal-title">Xóa nhân viên</h4>
+                <h4 class="modal-title">Xóa nhà phân phối</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div class="modal-body">					
@@ -235,7 +211,17 @@
         </div>
       </div>
     </div>
+
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
     </script>
+    <script src="/js/distributorspage.js"></script>
   </body>
-  <script src="/js/userspage.js"></script>
 </html>

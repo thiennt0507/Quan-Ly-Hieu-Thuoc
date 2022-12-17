@@ -7,6 +7,8 @@ const pageRouter = require("./routes/pageRouter");
 const clientRouter = require("./routes/clientRouter");
 const userRouter = require("./routes/userRouter");
 const loginRouter = require("./routes/loginRouter");
+const distributorRouter = require("./routes/distributorRouter");
+const manageRouter = require("./routes/manageRouter");
 
 const app = express();
 
@@ -42,4 +44,10 @@ app.use("/userspage/users", userRouter);
 
 // UserLogin
 app.use("/loginpage", loginRouter);
+
+// distributor routes
+app.use("/distributorpage/distributors", distributorRouter);
+
+// manage routes
+app.use("/managepage/drugs", manageRouter);
 module.exports = app;

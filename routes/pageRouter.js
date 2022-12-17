@@ -8,6 +8,7 @@ const {
   getStatisticalPage,
   getUsersPage,
   getLoginPage,
+  getDistributorsPage,
 } = require("../controllers/pageController");
 
 const router = express.Router();
@@ -20,5 +21,6 @@ router.route("/clientspage").get(getClientsPage);
 router.route("/userspage").get(getUsersPage);
 router.route("/statisticalpage").get(getStatisticalPage);
 router.route("/").get(getLoginPage);
+router.route("/distributorspage").get(getDistributorsPage);
 
 module.exports = router;

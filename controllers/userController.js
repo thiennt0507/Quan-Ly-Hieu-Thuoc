@@ -60,7 +60,7 @@ const updateUser = (req, res) => {
                      MatKhau = "${req.body.MatKhau}", 
                      HoTen = "${req.body.HoTen}", 
                      DiaChi = "${req.body.DiaChi}", 
-                     NgaySinh = "${req.body.NgaySinh}", 
+                     NgaySinh = DATE "${req.body.NgaySinh}", 
                      Email = "${req.body.Email}", 
                      DienThoai = "${req.body.DienThoai}", 
                      ChucVu = "${req.body.ChucVu}"

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/homepage.css" />
+    <link rel="stylesheet" href="/css/managepage.css" />
+    <style></style>
+    <title>Quản lý thuốc</title>
+  </head>
+  <body>
+    <div class="topnav" id="myTopnav">
+      <a href="http://localhost:3000/homepage"">Trang Chủ</a>
+      <a href="http://localhost:3000/managepage" class="active">Quản Lý Thuốc</a>
+      <a href="http://localhost:3000/sellpage" >Bán Thuốc</a>
+      <a href="http://localhost:3000/importpage">Nhập Kho Thuốc</a>
+      <a href="http://localhost:3000/clientspage">Khách Hàng </a>
+      <a href="http://localhost:3000/userspage">Tài Khoản</a>
+      <a href="http://localhost:3000/distributorspage">Nhà Phân Phối</a>
+      <a href="http://localhost:3000/statisticalpage">Thống Kê</a>
+      <input 
+      id="search"
+      type="text" 
+      placeholder="Tìm kiếm" 
+      style="height: 40px;
+             width: 300px;
+             align-items: center;
+             margin-top: 14px;" 
+      name="search">
+      <div class="dropdown" style="float: right">
+        <button class="dropbtn">
+          Tên nhân viên
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="http://localhost:3000">Log out</a>
+        </div>
+      </div>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+
+    <div class="main" style="margin-top: 66px">
+      <div class="table-responsive">
+        <div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-sm-6">
+                <h2>Quản lý <b>Thuốc</b></h2>
+              </div>
+              <div class="col-sm-6">
+                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm thông tin thuốc</span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa thông tin thuốc</span></a>						
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <span class="custom-checkbox">
+                    <input type="checkbox" id="selectAll">
+                    <label for="selectAll"></label>
+                  </span>
+                </th>
+                <th>Mã thuốc</th>
+                <th>Tên thuốc</th>
+                <th>Nhà sản xuất</th>
+                <th>Giá bán</th>
+                <th>Đơn vị</th>
+                <th>Hàm lượng</th>
+                <th>Hạn dùng</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i = 0; i < drugs.length; i++) { %>
+              <tr>
+                <td>
+                  <span class="custom-checkbox">
+                    <input type="checkbox" id=<%="checkbox" + drugs[i].IDThuoc %> name="options[]" value="1">
+                    <label for="checkbox1"></label>
+                  </span>
+                </td>
+                <td><%=drugs[i].MaThuoc%></td>
+                <td><%=drugs[i].TenThuoc%></td>
+                <td><%=drugs[i].NSX%></td>
+                <td><%=drugs[i].GiaBan%></td>
+                <td><%=drugs[i].DonVi%></td>
+                <td><%=drugs[i].HamLuong%></td>
+                <td><%=drugs[i].HanSuDung.slice(0,10)%></td>
+                <td>
+                  <a href="#editEmployeeModal" class="edit" id=<%="edit" + drugs[i].IDThuoc %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                  <a href="#deleteEmployeeModal" class="delete" id=<%="delete" + drugs[i].IDThuoc %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>        
+      <!-- Edit Modal HTML -->
+      <div id="addEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form>
+              <div class="modal-header">						
+                <h4 class="modal-title">Thêm thông tin thuốc</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">			
+                <div class="form-group">
+                  <label>Mã thuốc</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Tên thuốc</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Nhà sản xuất</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Nhóm thuốc</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Số lượng</label>
+                  <input type="text" class="form-control" required></input>
+                </div>
+                <div class="form-group">
+                  <label>Giá bán</label>
+                  <input type="text" class="form-control" required></input>
+                </div>
+                <div class="form-group">
+                  <label>Đơn vị</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Thành phần</label>
+                  <input type="text" class="form-control"required>
+                </div>	
+                <div class="form-group">
+                  <label>Hàm lượng</label>
+                  <input type="text" class="form-control"required>
+                </div>				
+                <div class="form-group">
+                  <label>Cách dùng</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Hạn sử dụng</label>
+                  <input type="date" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Công dụng</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Phản tác dụng</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Dạng bào chế</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Bảo quản</label>
+                  <input type="text" class="form-control"required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <input type="button" class="btn btn-success" value="Add">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Edit Modal HTML -->
+      <div id="editEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form>
+              <div class="modal-header">						
+                <h4 class="modal-title">Chỉnh sửa thông tin thuốc</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">					
+                <div class="form-group">
+                  <label>Mã thuốc</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Tên thuốc</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Nhà sản xuất</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Nhóm thuốc</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Số lượng</label>
+                  <input type="text" class="form-control" required></input>
+                </div>
+                <div class="form-group">
+                  <label>Giá bán</label>
+                  <input type="text" class="form-control" required></input>
+                </div>
+                <div class="form-group">
+                  <label>Đơn vị</label>
+                  <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Thành phần</label>
+                  <input type="text" class="form-control"required>
+                </div>	
+                <div class="form-group">
+                  <label>Hàm lượng</label>
+                  <input type="text" class="form-control"required>
+                </div>				
+                <div class="form-group">
+                  <label>Cách dùng</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Hạn sử dụng</label>
+                  <input type="date" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Công dụng</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Phản tác dụng</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Dạng bào chế</label>
+                  <input type="text" class="form-control"required>
+                </div>
+                <div class="form-group">
+                  <label>Bảo quản</label>
+                  <input type="text" class="form-control"required>
+                </div>					
+              </div>
+              <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <input type="submit" class="btn btn-info" value="Save">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Delete Modal HTML -->
+      <div id="deleteEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form>
+              <div class="modal-header">						
+                <h4 class="modal-title">Xóa thông tin thuốc</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">					
+                <p>Bạn có chắc chắn muốn xóa mục đã chọn</p>
+                <p class="text-warning"><small>Hành động này không thể hoàn tác.</small></p>
+              </div>
+              <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy bỏ">
+                <input type="submit" class="btn btn-danger" value="Xóa">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+    </script>
+  </body>
+  <script src="/js/managepage.js"></script>
+</html>

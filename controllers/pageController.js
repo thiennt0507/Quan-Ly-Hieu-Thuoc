@@ -33,8 +33,29 @@ const getClientsPage = async (req, res) => {
 const getImportPage = (req, res) => {
   res.render("importpage.ejs");
 };
-const getManagePage = (req, res) => {
-  res.render("manage.ejs");
+const getManagePage = async (req, res) => {
+  let response = await fetch("http://localhost:3000/managepage/drugs", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+  let data = await response.json();
+  let { result } = data;
+
+  response = await fetch("http://localhost:3000/loginpage", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  data = await response.json();
+  let result_1 = data.result.length == 0 ? null : data.result;
+  res.render("managepage.ejs", {
+    drugs: result,
+    currentUser: result_1,
+  });
 };
 const getSellPage = (req, res) => {
   res.render("sellpage.ejs");
@@ -71,6 +92,33 @@ const getLoginPage = (req, res) => {
   res.render("login.ejs");
 };
 
+const getDistributorsPage = async (req, res) => {
+  let response = await fetch(
+    "http://localhost:3000/distributorpage/distributors",
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    }
+  );
+  let data = await response.json();
+  let { result } = data;
+
+  response = await fetch("http://localhost:3000/loginpage", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+  data = await response.json();
+  let result_1 = data.result.length == 0 ? null : data.result;
+  res.render("distributorspage.ejs", {
+    distributors: result,
+    currentUser: result_1,
+  });
+};
+
 module.exports = {
   getHomePage,
   getManagePage,
@@ -80,4 +128,5 @@ module.exports = {
   getStatisticalPage,
   getUsersPage,
   getLoginPage,
+  getDistributorsPage,
 };
