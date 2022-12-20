@@ -9,6 +9,8 @@ const userRouter = require("./routes/userRouter");
 const loginRouter = require("./routes/loginRouter");
 const distributorRouter = require("./routes/distributorRouter");
 const manageRouter = require("./routes/manageRouter");
+const CTHDNRouter = require("./routes/CTHDNRouter");
+const HDNRouter = require("./routes/HDNRouter");
 
 const app = express();
 
@@ -50,4 +52,11 @@ app.use("/distributorpage/distributors", distributorRouter);
 
 // manage routes
 app.use("/managepage/drugs", manageRouter);
+
+// cthdn routes
+app.use("/importpage/CTHDN", CTHDNRouter);
+
+// hdn routes
+app.use("/importpage/HDN", HDNRouter);
+
 module.exports = app;

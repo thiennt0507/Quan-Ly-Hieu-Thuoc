@@ -66,7 +66,7 @@
     <style></style>
     <title>Nhập kho thuốc</title>
   </head>
-  <body>
+  <body  style="background-color: #f1f1f1;">
     <div class="topnav" id="myTopnav">
       <a href="http://localhost:3000/homepage"">Trang Chủ</a>
       <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
@@ -91,7 +91,7 @@
       </a>
     </div>
     
-    <div class="container-fluid" style="margin-top: 66px">
+    <div class="container-fluid" style="margin-top: 66px" >
       <div class="row ">
         <div class="col-sm-5 sidenav">
           <div class="container-xl">
@@ -104,8 +104,8 @@
                     <h2><b>Thuốc đang chọn</b></h2>
                   </div>
                   <div class="col-sm-7">
+                    <a href="#deleteEmployeeModal-CTHD" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xe9a1;</i> <span>Xuất hóa đơn</span></a>						
                     <a href="#addEmployeeModal-CTHD" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm </span></a>
-                    <a href="#deleteEmployeeModal-CTHD" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa sản phẩm</span></a>						
                   </div>
                 </div>
               </div>
@@ -126,6 +126,51 @@
                 </thead>
                 <tbody>
 
+                    <tr class="row-client">
+                      <td>
+                        <span class="custom-checkbox">
+                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                          <label for="checkbox1"></label>
+                        </span>
+                      </td>
+                      <td>Thuốc giảm đau</td>
+                      <td>100</td>
+                      <td>20000</td>
+                      <td>
+                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                      </td>
+                    </tr>
+                    <tr class="row-client">
+                      <td>
+                        <span class="custom-checkbox">
+                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                          <label for="checkbox1"></label>
+                        </span>
+                      </td>
+                      <td>Thuốc giảm đau</td>
+                      <td>100</td>
+                      <td>20000</td>
+                      <td>
+                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                      </td>
+                    </tr>
+                    <tr class="row-client">
+                      <td>
+                        <span class="custom-checkbox">
+                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                          <label for="checkbox1"></label>
+                        </span>
+                      </td>
+                      <td>Thuốc giảm đau</td>
+                      <td>100</td>
+                      <td>20000</td>
+                      <td>
+                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                      </td>
+                    </tr>
                     <tr class="row-client">
                       <td>
                         <span class="custom-checkbox">
@@ -304,6 +349,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                    <% for(let i = HDN.length - 1; i >= 0; i--) { %>
                     <tr class="row-client">
                       <td>
                         <span class="custom-checkbox">
@@ -311,16 +357,17 @@
                           <label for="checkbox1"></label>
                         </span>
                       </td>
-                      <td>Công ty TNHH Thiện nguyễn thành</td>
-                      <th>200000</th>
-                      <th>10%</th>
-                      <th>220000</th>
-                      <th>2022-12-08</th>
+                      <td><%= HDN[i].IDNhaPhanPhoi %></td>
+                      <th><%= HDN[i].TongTienThuoc %></th>
+                      <th><%= HDN[i].TongThue %></th>
+                      <th><%= HDN[i].TongTienHDN %></th>
+                      <th><%= HDN[i].NgayNhap %></th>
                       <td>
                         <a href="#editEmployeeModal" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                       </td>
                     </tr>
+                    <% } %>
            
                 </tbody>
               </table>
@@ -340,8 +387,10 @@
                       <label>Nhà phân phối</label>
                       <select id="select-state" class="form-control" placeholder="Chọn nhà phân phối">
                         <option value="">Chọn nhà phân phối</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
+                        <% for(let i = 0; i < NPP.length; i++) { %> 
+                        <option value="<%=NPP[i].IDNhaPhanPhoi%>"><%=NPP[i].TenNPP%></option>
+                        <% } %>
+                        <!-- <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>
                         <option value="AR">Arkansas</option>
                         <option value="CA">California</option>
@@ -354,7 +403,7 @@
                         <option value="HI">Hawaii</option>
                         <option value="ID">Idaho</option>
                         <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
+                        <option value="IN">Indiana</option> -->
                       </select>
                     </div>
                     <div class="form-group">
@@ -396,8 +445,10 @@
                       <label>Nhà phân phối</label>
                       <select id="select-state" class="form-control" placeholder="Chọn nhà phân phối">
                         <option value="">Chọn nhà phân phối</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
+                        <% for(let i = 0; i < NPP.length; i++) { %> 
+                          <option value="<%=NPP[i].IDNhaPhanPhoi%>"><%=NPP[i].TenNPP%></option>
+                        <% } %>
+                        <!-- <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>
                         <option value="AR">Arkansas</option>
                         <option value="CA">California</option>
@@ -410,7 +461,7 @@
                         <option value="HI">Hawaii</option>
                         <option value="ID">Idaho</option>
                         <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
+                        <option value="IN">Indiana</option> -->
                       </select>
                     </div>
                     <div class="form-group">
@@ -460,8 +511,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
 
