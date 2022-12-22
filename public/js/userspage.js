@@ -7,8 +7,6 @@ function myFunction() {
   }
 }
 
-//
-
 $(document).ready(function () {
   // Activate tooltip
   $('[data-toggle="tooltip"]').tooltip();
@@ -33,11 +31,41 @@ $(document).ready(function () {
   });
 });
 
+//  Check login status
+//  Check login status
+let username = document.getElementsByClassName("dropbtn")[0].innerText;
+let logout = document.getElementsByClassName("dropdown-content")[0];
+
+let checklogin = async () => {
+  let response = await fetch("http://localhost:3000/loginpage/role", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  let { result } = await response.json();
+  if (result === "Logout") {
+    alert("You are logout! Please login again");
+    window.location = "http://localhost:3000";
+  }
+};
+
+checklogin();
+
+logout.addEventListener("click", async () => {
+  await fetch(`http://localhost:3000/loginpage/logout`, {
+    method: "delete",
+  });
+  window.location = "http://localhost:3000";
+});
+
 // search
 
 let search = document.getElementById("search");
 let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 search.addEventListener("keyup", () => {
+  checklogin();
   for (let i = 0; i < rows.length; i++) {
     if (
       rows[i].children[1].innerText
@@ -86,6 +114,7 @@ let deleteform = document.getElementById("deleteEmployeeModal");
 
 for (let edit of listEdit) {
   edit.addEventListener("click", async () => {
+    checklogin();
     let id = edit.id.replace("edit", "");
     const response = await fetch(
       `http://localhost:3000/userspage/users/${id}`,
@@ -146,6 +175,7 @@ for (let edit of listEdit) {
 
 for (let del of listDelete) {
   del.addEventListener("click", async () => {
+    checklogin();
     let id = del.id.replace("delete", "");
     confirmDelete.onclick = async () => {
       fetch(`http://localhost:3000/userspage/users/${id}`, {
@@ -167,6 +197,7 @@ const validateEmail = (email) => {
 };
 
 addUser.addEventListener("click", async () => {
+  checklogin();
   if (
     addName.value &&
     addUserName.value &&

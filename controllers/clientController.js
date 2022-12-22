@@ -18,7 +18,6 @@ const getClient = (req, res) => {
     if (err) {
       throw err;
     } else {
-      console.log(result);
       res.status(200).json({
         status: "complete",
         result: result.length == 0 ? null : result,
@@ -34,7 +33,6 @@ const createClient = (req, res) => {
     if (err) {
       throw err;
     } else {
-      console.log(result);
       res.status(201).json({
         status: "complete",
         result,

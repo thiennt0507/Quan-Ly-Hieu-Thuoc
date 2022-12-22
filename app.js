@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+// const cookieParser = require("cookie-parser");
 const connection = require("./database/connectdb");
 const path = require("path");
 
@@ -11,14 +12,17 @@ const distributorRouter = require("./routes/distributorRouter");
 const manageRouter = require("./routes/manageRouter");
 const CTHDNRouter = require("./routes/CTHDNRouter");
 const HDNRouter = require("./routes/HDNRouter");
+const CTHDNSessionRouter = require("./routes/CTHDNSessionRouter");
 
 const app = express();
 
-// login
+// app.use(cookieParser());
+
 app.use(
   session({
     secret: "secret",
     resave: true,
+    cookie: { maxAge: 864000 },
     saveUninitialized: true,
   })
 );
@@ -39,6 +43,8 @@ app.set("view engine", "ejs");
 
 app.use("", pageRouter);
 
+// use session middle
+
 app.use("/clientpage/clients", clientRouter);
 
 // userRouter
@@ -58,5 +64,8 @@ app.use("/importpage/CTHDN", CTHDNRouter);
 
 // hdn routes
 app.use("/importpage/HDN", HDNRouter);
+
+// ctdhn routes
+app.use("/importpage/CTHDNSession", CTHDNSessionRouter);
 
 module.exports = app;

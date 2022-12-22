@@ -43,7 +43,6 @@ const createDistributor = (req, res) => {
 };
 
 const updateDistributor = (req, res) => {
-  console.log(req.body);
   const query = `Update nhaphanphoi
                  Set TenNPP= "${req.body.TenNPP}", DiaChi= "${req.body.DiaChi}", DienThoai= "${req.body.DienThoai}", Fax= "${req.body.Fax}", Email="${req.body.Email}"
                  where IDNhaPhanPhoi = ${req.params.id}`;

@@ -1,8 +1,20 @@
 const clientController = require("../controllers/clientController");
 const fetch = require("node-fetch");
 
-const getHomePage = (req, res) => {
-  res.render("homepage.ejs");
+const getHomePage = async (req, res) => {
+  let response = await fetch(`http://localhost:3000/loginpage/role`, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  data = await response.json();
+  let result_1 = data.result;
+
+  res.render("homepage.ejs", {
+    currentUser: result_1,
+  });
 };
 
 const getClientsPage = async (req, res) => {
@@ -16,7 +28,7 @@ const getClientsPage = async (req, res) => {
   let data = await response.json();
   let { result } = data;
 
-  response = await fetch("http://localhost:3000/loginpage", {
+  response = await fetch(`http://localhost:3000/loginpage/role`, {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -24,7 +36,8 @@ const getClientsPage = async (req, res) => {
   });
 
   data = await response.json();
-  let result_1 = data.result.length == 0 ? null : data.result;
+  let result_1 = data.result;
+
   res.render("clientspage.ejs", {
     clients: result,
     currentUser: result_1,
@@ -32,6 +45,7 @@ const getClientsPage = async (req, res) => {
 };
 
 const getImportPage = async (req, res) => {
+  // Get all HDN
   let response = await fetch("http://localhost:3000/importpage/HDN", {
     method: "GET",
     headers: {
@@ -41,7 +55,7 @@ const getImportPage = async (req, res) => {
   let data = await response.json();
   let { result } = data;
 
-  response = await fetch("http://localhost:3000/loginpage", {
+  response = await fetch(`http://localhost:3000/loginpage/role`, {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -49,8 +63,9 @@ const getImportPage = async (req, res) => {
   });
 
   data = await response.json();
-  let result_1 = data.result.length == 0 ? null : data.result;
+  let result_1 = data.result;
 
+  // Get all Nha phan phoi
   response = await fetch("http://localhost:3000/distributorpage/distributors", {
     method: "GET",
     headers: {
@@ -60,12 +75,38 @@ const getImportPage = async (req, res) => {
 
   data = await response.json();
   let result_2 = data.result;
-  console.log(result_2.length);
 
+  response = await fetch(
+    "http://localhost:3000/importpage/CTHDNSession/select",
+    {
+      method: "GET",
+      headers: {
+        "Accept-Encoding": "gzip,def",
+        Connection: "keep-alive",
+        accept: "application/json",
+      },
+    }
+  );
+
+  data = await response.json();
+  let result_3 = data.result ? data.result : [];
+
+  response = await fetch("http://localhost:3000/managepage/drugs", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  data = await response.json();
+
+  let result_4 = data.result;
   res.render("importpage.ejs", {
     HDN: result,
     currentUser: result_1,
     NPP: result_2,
+    CTHDN_SESSIONS: result_3,
+    Drugs: result_4,
   });
 };
 
@@ -79,7 +120,7 @@ const getManagePage = async (req, res) => {
   let data = await response.json();
   let { result } = data;
 
-  response = await fetch("http://localhost:3000/loginpage", {
+  response = await fetch(`http://localhost:3000/loginpage/role`, {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -87,19 +128,44 @@ const getManagePage = async (req, res) => {
   });
 
   data = await response.json();
-  let result_1 = data.result.length == 0 ? null : data.result;
+  let result_1 = data.result;
+
   res.render("managepage.ejs", {
     drugs: result,
     currentUser: result_1,
   });
 };
 
-const getSellPage = (req, res) => {
-  res.render("sellpage.ejs");
+const getSellPage = async (req, res) => {
+  let response = await fetch(`http://localhost:3000/loginpage/role`, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  data = await response.json();
+  let result_1 = data.result;
+
+  res.render("sellpage.ejs", {
+    currentUser: result_1,
+  });
 };
 
-const getStatisticalPage = (req, res) => {
-  res.render("statisticalpage.ejs");
+const getStatisticalPage = async (req, res) => {
+  let response = await fetch(`http://localhost:3000/loginpage/role`, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  data = await response.json();
+  let result_1 = data.result;
+
+  res.render("statisticalpage.ejs", {
+    currentUser: result_1,
+  });
 };
 
 const getUsersPage = async (req, res) => {
@@ -112,7 +178,7 @@ const getUsersPage = async (req, res) => {
   let data = await response.json();
   let { result } = data;
 
-  response = await fetch("http://localhost:3000/loginpage", {
+  response = await fetch(`http://localhost:3000/loginpage/role`, {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -120,7 +186,8 @@ const getUsersPage = async (req, res) => {
   });
 
   data = await response.json();
-  let result_1 = data.result.length == 0 ? null : data.result;
+  let result_1 = data.result;
+
   res.render("userspage.ejs", {
     users: result,
     currentUser: result_1,
@@ -143,14 +210,16 @@ const getDistributorsPage = async (req, res) => {
   let data = await response.json();
   let { result } = data;
 
-  response = await fetch("http://localhost:3000/loginpage", {
+  response = await fetch(`http://localhost:3000/loginpage/role`, {
     method: "GET",
     headers: {
       accept: "application/json",
     },
   });
+
   data = await response.json();
-  let result_1 = data.result.length == 0 ? null : data.result;
+  let result_1 = data.result;
+
   res.render("distributorspage.ejs", {
     distributors: result,
     currentUser: result_1,

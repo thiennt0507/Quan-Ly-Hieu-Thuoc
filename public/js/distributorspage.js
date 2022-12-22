@@ -33,6 +33,35 @@ $(document).ready(function () {
   });
 });
 
+//  Check login status
+//  Check login status
+let username = document.getElementsByClassName("dropbtn")[0].innerText;
+let logout = document.getElementsByClassName("dropdown-content")[0];
+
+let checklogin = async () => {
+  let response = await fetch("http://localhost:3000/loginpage/role", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  let { result } = await response.json();
+  if (result === "Logout") {
+    alert("You are logout! Please login again");
+    window.location = "http://localhost:3000";
+  }
+};
+
+checklogin();
+
+logout.addEventListener("click", async () => {
+  await fetch(`http://localhost:3000/loginpage/logout`, {
+    method: "delete",
+  });
+  window.location = "http://localhost:3000";
+});
+
 //search
 
 let search = document.getElementById("search");

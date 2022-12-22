@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Bootstrap Simple Login Form</title>
+    <title>Đăng nhập</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -74,16 +74,21 @@
     const passwordInput = formGroupElement[1].children[0];
     const button = formGroupElement[2].children[0];
 
+    let result;
+
     (async () => {
-      let response = await fetch("http://localhost:3000/loginpage", {
+      let response = await fetch("http://localhost:3000/loginpage/role", {
         method: "GET",
         headers: {
           accept: "application/json",
         },
       });
 
-      data = await response.json();
-      if (data.length == 0) {
+      let data = await response.json();
+      result = data.result;
+      if (result != "Logout" && result) {
+        console.log(result);
+        alert("Your are login");
         window.location = "http://localhost:3000/homepage";
       }
     })();
@@ -96,14 +101,25 @@
       let data = await response.json();
       let { result } = data;
 
-      if (result.length == 0) return;
+      if (result.length == 0) {
+        alert("Login failed: username or password incorrect");
+        return;
+      }
       if (
         result[0].TaiKhoan === userNameInput.value.trim() &&
         result[0].MatKhau === passwordInput.value.trim()
       ) {
-        await fetch(
-          `http://localhost:3000/userspage/users/login/${userNameInput.value.trim()}/1`
-        );
+        console.log("Login successful");
+        await fetch(`http://localhost:3000/loginpage/login`, {
+          method: "POST",
+          body: JSON.stringify({
+            username: result[0].TaiKhoan,
+          }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
         window.location = "http://localhost:3000/homepage";
       }
     });

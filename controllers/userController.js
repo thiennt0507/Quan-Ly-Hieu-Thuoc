@@ -44,7 +44,6 @@ const createUser = (req, res) => {
     if (err) {
       throw err;
     } else {
-      console.log(result);
       res.status(201).json({
         status: "complete",
         result,
@@ -72,7 +71,6 @@ const updateUser = (req, res) => {
     if (err) {
       throw err;
     } else {
-      console.log("result");
       res.status(200).json({
         status: "success",
         result,

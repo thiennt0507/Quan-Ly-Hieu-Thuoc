@@ -78,11 +78,11 @@
       <a href="http://localhost:3000/statisticalpage">Thống Kê</a>
       <div class="dropdown" style="float: right">
         <button class="dropbtn">
-          Tên nhân viên
+          <%=currentUser%>
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="http://localhost:3000">Log out</a>
+          <a href="javascript:void(0);">Log out</a>
         </div>
       </div>
 
@@ -125,68 +125,23 @@
                   </tr>
                 </thead>
                 <tbody>
-
+                    <% for (let i =0; i < CTHDN_SESSIONS.length; i++) { %>
                     <tr class="row-client">
                       <td>
                         <span class="custom-checkbox">
-                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                          <input type="checkbox" id=<%="checkbox" + i %> name="options[]" value="1">
                           <label for="checkbox1"></label>
                         </span>
                       </td>
-                      <td>Thuốc giảm đau</td>
-                      <td>100</td>
-                      <td>20000</td>
+                      <td><%=CTHDN_SESSIONS[i].TenThuoc%></td>
+                      <td><%=CTHDN_SESSIONS[i].SoLuong%></td>
+                      <td><%=CTHDN_SESSIONS[i].GiaNhap%></td>
                       <td>
-                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal-CTHD" class="edit" id=<%="edit" + i %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal-CTHD" class="delete" id=<%="delete" + i %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                       </td>
                     </tr>
-                    <tr class="row-client">
-                      <td>
-                        <span class="custom-checkbox">
-                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                          <label for="checkbox1"></label>
-                        </span>
-                      </td>
-                      <td>Thuốc giảm đau</td>
-                      <td>100</td>
-                      <td>20000</td>
-                      <td>
-                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                      </td>
-                    </tr>
-                    <tr class="row-client">
-                      <td>
-                        <span class="custom-checkbox">
-                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                          <label for="checkbox1"></label>
-                        </span>
-                      </td>
-                      <td>Thuốc giảm đau</td>
-                      <td>100</td>
-                      <td>20000</td>
-                      <td>
-                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                      </td>
-                    </tr>
-                    <tr class="row-client">
-                      <td>
-                        <span class="custom-checkbox">
-                          <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                          <label for="checkbox1"></label>
-                        </span>
-                      </td>
-                      <td>Thuốc giảm đau</td>
-                      <td>100</td>
-                      <td>20000</td>
-                      <td>
-                        <a href="#editEmployeeModal-CTHD" class="edit" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal-CTHD" class="delete" id="edit1" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                      </td>
-                    </tr>
-           
+                    <% } %>
                 </tbody>
               </table>
             </div>
@@ -205,8 +160,10 @@
                       <label>Tên Thuốc</label>
                       <select id="select-state" class="form-control" placeholder="Chọn tên thuốc">
                         <option value="">Chọn tên thuốc</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
+                        <% for (let i = 0; i < Drugs.length; i++) { %>
+                        <option value="<%= i %>>"><%=Drugs[i].TenThuoc%></option>
+                        <% } %>
+                        <!-- <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>
                         <option value="AR">Arkansas</option>
                         <option value="CA">California</option>
@@ -219,7 +176,7 @@
                         <option value="HI">Hawaii</option>
                         <option value="ID">Idaho</option>
                         <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
+                        <option value="IN">Indiana</option> -->
                       </select>
                     </div>
                     <div class="form-group">
@@ -252,9 +209,10 @@
                     <div class="form-group">
                       <label>Tên Thuốc</label>
                       <select id="select-state" class="form-control" placeholder="Chọn tên thuốc">
-                        <option value="">Chọn tên thuốc</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
+                        <% for (let i = 0; i < Drugs.length; i++) { %>
+                          <option value="<%= i %>>"><%=Drugs[i].TenThuoc%></option>
+                          <% } %>
+                        <!-- <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>
                         <option value="AR">Arkansas</option>
                         <option value="CA">California</option>
@@ -267,7 +225,7 @@
                         <option value="HI">Hawaii</option>
                         <option value="ID">Idaho</option>
                         <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
+                        <option value="IN">Indiana</option> -->
                       </select>
                     </div>
                     <div class="form-group">
@@ -516,11 +474,11 @@
 
     <script>
 
-          $(document).ready(function () {
+      $(document).ready(function () {
               $('select').selectize({
                   sortField: 'text'
               });
-          });
+      });
 
 
       function myFunction() {
@@ -531,6 +489,34 @@
           x.className = "topnav";
         }
       }
+
+       //  Check login status
+    let username = document.getElementsByClassName("dropbtn")[0].innerText;
+      let logout = document.getElementsByClassName("dropdown-content")[0];
+
+      let checklogin = async () => {
+        let response = await fetch("http://localhost:3000/loginpage/role", {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        });
+
+        let { result } = await response.json();
+        if (result === "Logout") {
+          alert("You are logout! Please login again");
+          window.location = "http://localhost:3000";
+        }
+      };
+
+      checklogin();
+
+      logout.addEventListener("click", async () => {
+        await fetch(`http://localhost:3000/loginpage/logout`, {
+          method: "delete",
+        });
+        window.location = "http://localhost:3000";
+      });
     </script>
   </body>
 </html>
