@@ -33,24 +33,37 @@ $(document).ready(function () {
   });
 });
 
-// search input
+// Check login
 
-let search = document.getElementById("search");
-let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-search.addEventListener("keyup", () => {
-  for (let i = 0; i < rows.length; i++) {
-    if (
-      rows[i].children[1].innerText
-        .toLowerCase()
-        .trim()
-        .includes(search.value.toLowerCase().trim())
-    ) {
-      rows[i].style.display = "";
-    } else {
-      rows[i].style.display = "none";
-    }
+//  Check login status
+let username = document.getElementsByClassName("dropbtn")[0].innerText;
+let logout = document.getElementsByClassName("dropdown-content")[0];
+
+let checklogin = async () => {
+  let response = await fetch("http://localhost:3000/loginpage/checklogin", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  let { result } = await response.json();
+  if (result === "Logout") {
+    alert("You are logout! Please login again");
+    window.location = "http://localhost:3000";
   }
+};
+
+checklogin();
+
+logout.addEventListener("click", async () => {
+  await fetch(`http://localhost:3000/loginpage/logout`, {
+    method: "delete",
+  });
+  window.location = "http://localhost:3000";
 });
+
+//
 
 let addClient = document.getElementsByClassName("btn-success")[1];
 

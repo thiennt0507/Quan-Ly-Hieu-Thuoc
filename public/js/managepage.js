@@ -62,24 +62,6 @@ logout.addEventListener("click", async () => {
   window.location = "http://localhost:3000";
 });
 
-// search
-let search = document.getElementById("search");
-let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-search.addEventListener("keyup", () => {
-  for (let i = 0; i < rows.length; i++) {
-    if (
-      rows[i].children[2].innerText
-        .toLowerCase()
-        .trim()
-        .includes(search.value.toLowerCase().trim())
-    ) {
-      rows[i].style.display = "";
-    } else {
-      rows[i].style.display = "none";
-    }
-  }
-});
-
 let addUser = document.getElementsByClassName("btn-success")[1];
 
 let addform = document.getElementById("addEmployeeModal");

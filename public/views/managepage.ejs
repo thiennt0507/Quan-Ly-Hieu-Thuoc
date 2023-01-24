@@ -17,6 +17,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
+      <!-- Giao dien chia 3 -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  
+      <!-- search -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+      <!--  -->
     <link rel="stylesheet" href="/css/homepage.css" />
     <link rel="stylesheet" href="/css/managepage.css" />
     <style></style>
@@ -90,11 +102,11 @@
             </thead>
             <tbody>
               <% for (let i = 0; i < drugs.length; i++) { %>
-              <tr>
+              <tr class="row-client <%= "item" + Number(i) %>">
                 <td style="display: none;">
                   <span class="custom-checkbox">
                     <input type="checkbox" id=<%="checkbox" + drugs[i].IDThuoc %> name="options[]" value="1">
-                    <label for="checkbox1"></label>
+                    <label for="checkbox"></label>
                   </span>
                 </td>
                 <td><%=drugs[i].TenThuoc%></td>
@@ -112,6 +124,30 @@
               <% } %>
             </tbody>
           </table>
+
+
+          <div class="clearfix">
+            <div class="hint-text">Hiển thị <b>10</b> trên <b><%=drugs.length%></b> loại thuốc</div>
+            <ul class="pagination">
+              <li class="page-item disabled"><a href="#">Previous</a></li>
+              <% for (let j = 0; j < Math.ceil(drugs.length / 10); j ++) {%>
+                <%  if (j == 0){%>
+                  <li class="page-item active"><a href="#" class="page-link"><%=j+1%></a></li>
+                <% } else { %>
+                  <li class="page-item"><a href="#" class="page-link"><%=j+1%></a></li>
+                <% } %>
+              <% } %>
+              <!-- <li class="page-item"><a href="#" class="page-link">1</a></li>
+              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <li class="page-item active"><a href="#" class="page-link">3</a></li>
+              <li class="page-item"><a href="#" class="page-link">4</a></li>
+              <li class="page-item"><a href="#" class="page-link">5</a></li> -->
+              <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            </ul>
+          </div>
+
+
+
         </div>
       </div>        
       <!-- Edit Modal HTML -->
@@ -295,14 +331,134 @@
       </div>
     </div>
     <script>
-      function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-          x.className += " responsive";
+      // search input
+      const hintText = document.getElementsByClassName("hint-text")[0];
+      let quantitySorted = 0;
+  
+      let search = document.getElementById("search");
+      let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+      search.addEventListener("keyup", () => {
+        for (let i = 0; i < rows.length; i++) {
+          if (
+            rows[i].children[1].innerText
+              .toLowerCase()
+              .trim()
+              .includes(search.value.toLowerCase().trim())
+            && search.value.toLowerCase().trim()
+          ) {
+            !rows[i].classList.contains("sorted") ? rows[i].classList.add("sorted") : '';
+          } else {
+            rows[i].classList.contains("sorted") ? rows[i].classList.remove("sorted") : '';
+          }
+        }
+        if (search.value.toLowerCase().trim()) {
+          quantitySorted = document.getElementsByClassName("sorted").length;
         } else {
-          x.className = "topnav";
+          quantitySorted = 0;
+        }
+        hintText.innerHTML = `Hiển thị <b>5</b> trên <b>${search.value.toLowerCase().trim() ? quantitySorted : rows.length}</b> khách hàng`
+        setCurrentState(currentTab)
+      });
+  
+      // Pagination
+  
+      // const hdnPage = document.getElementsByClassName("hdn-page")[0];
+        const tables = document.getElementsByTagName("tbody")[0];
+        const items = tables.getElementsByClassName("row-client")
+  
+        const pagination = document.getElementsByClassName("pagination")[0];
+        const pages = pagination.getElementsByClassName("page-item");
+        let activePage = pagination.getElementsByClassName("active")[0];
+  
+        let beforeTab = 1;
+        let afterTab = 2;
+        
+        let currentTab = 1;
+  
+        let count = 0;
+        const setCurrentState = (currentTab) => {
+          count = 0;
+          for (let i = 0; i < items.length; i++) {
+          if (search.value === "") {
+            if (i >= (currentTab - 1) * 10 && i < currentTab * 10) {
+              items[i].style.display = ""
+            } else {
+              items[i].style.display = "none"
+            }
+          } else {
+            if (items[i].classList.contains("sorted"))  {
+              (count >= (currentTab - 1) * 10 && count < currentTab * 10) ? items[i].style.display = "" : items[i].style.display = "none";
+              count++;
+            } else {
+              items[i].style.display = "none"
+            }
+          }
+  
+          if (currentTab >= 2) {
+          pages[0].classList.contains("disabled")
+            ? pages[0].classList.toggle("disabled")
+            : pages[0].classList;
+          }
+        afterTab = 2;
+        beforeTab = 1;
+        if (currentTab == 1) {
+          pages[0].classList.contains("disabled")
+            ? pages[0].classList
+            : pages[0].classList.toggle("disabled");
+          afterTab = 3;
+          beforeTab = 0;
+        }
+        if (currentTab  == pages.length - 3) {
+          afterTab = 1;
+          beforeTab = 2;
+        }
+        if (currentTab  == pages.length - 2) {
+          afterTab = 1;
+          beforeTab = 3;
+        }
+        for (let i = 1; i < pages.length - 1; i++) {
+          if (i >= currentTab  * 1 - beforeTab && i <= currentTab  * 1 + afterTab) {
+            pages[i].style.display = "";
+          } else if (i <= pages.length - 2) {
+            pages[i].style.display = "none";
+          }
+        }
         }
       }
+      setCurrentState(currentTab);
+    for (let index in pages) {
+      if (index == 0) {
+        pages[index].addEventListener("click", () => {
+          if (currentTab  >=2) {
+            activePage.classList.toggle("active");
+            pages[currentTab - 1].classList.toggle("active");
+            activePage = pages[currentTab - 1];
+            currentTab--;
+            setCurrentState(currentTab);
+          }
+        });
+      }
+      if (index == pages.length  - 1) {
+        pages[index].addEventListener("click", () => {
+          if (currentTab  < pages.length - 2) {
+            activePage.classList.toggle("active");
+            pages[currentTab + 1].classList.toggle("active");
+            activePage = pages[currentTab + 1];
+            currentTab++;
+            setCurrentState(currentTab);
+          }
+        });
+      }
+      if (index > 0 && index <= pages.length  - 2) {
+        pages[index].addEventListener("click", () => {
+          activePage.classList.toggle("active");
+          pages[index].classList.toggle("active");
+          activePage = pages[index];
+          currentTab = index;
+          setCurrentState(currentTab);
+        });
+      }
+  }
     </script>
   </body>
   <script src="/js/managepage.js"></script>

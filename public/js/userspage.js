@@ -32,7 +32,6 @@ $(document).ready(function () {
 });
 
 //  Check login status
-//  Check login status
 let username = document.getElementsByClassName("dropbtn")[0].innerText;
 let logout = document.getElementsByClassName("dropdown-content")[0];
 
@@ -58,26 +57,6 @@ logout.addEventListener("click", async () => {
     method: "delete",
   });
   window.location = "http://localhost:3000";
-});
-
-// search
-
-let search = document.getElementById("search");
-let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-search.addEventListener("keyup", () => {
-  checklogin();
-  for (let i = 0; i < rows.length; i++) {
-    if (
-      rows[i].children[1].innerText
-        .toLowerCase()
-        .trim()
-        .includes(search.value.toLowerCase().trim())
-    ) {
-      rows[i].style.display = "";
-    } else {
-      rows[i].style.display = "none";
-    }
-  }
 });
 
 let addUser = document.getElementsByClassName("btn-success")[1];
