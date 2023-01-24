@@ -5,7 +5,6 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 router.route("/login/:TaiKhoan").get(userController.getUserByUserName);
-router.route("/login/:TaiKhoan/:IsLogin").get(userController.updateLoginUser);
 
 router
   .route("/:id")

@@ -63,14 +63,14 @@
               </div>
               <div class="col-sm-6">
                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm nhân viên</span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa nhân viên</span></a>						
+                <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa nhân viên</span></a>						 -->
               </div>
             </div>
           </div>
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>
+                <th style="display: none;">
                   <span class="custom-checkbox">
                     <input type="checkbox" id="selectAll">
                     <label for="selectAll"></label>
@@ -86,11 +86,12 @@
               </tr>
             </thead>
             <tbody>
+              <% if (users.length > 0) { %>
               <% for (let i = 0; i < users.length; i++) { %>
               <tr>
-                <td>
+                <td style="display: none;">
                   <span class="custom-checkbox">
-                    <input type="checkbox" id=<%="checkbox" + users[i].IDTaiKhoan %> name="options[]" value="1">
+                    <input type="checkbox" id=<%="checkbox" + users[i].IDNhanVien %> name="options[]" value="1">
                     <label for="checkbox1"></label>
                   </span>
                 </td>
@@ -98,13 +99,14 @@
                 <td><%=users[i].TaiKhoan%></td>
                 <td><%=users[i].Email%></td>
                 <td><%=users[i].DiaChi%></td>
-                <td><%=new Date(users[i].NgaySinh).toISOString()%></td>
+                <td><%=users[i].NgaySinh.slice(0,10)%></td>
                 <td><%=users[i].DienThoai%></td>
                 <td>
-                  <a href="#editEmployeeModal" class="edit" id=<%="edit" + users[i].IDTaiKhoan %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                  <a href="#deleteEmployeeModal" class="delete" id=<%="delete" + users[i].IDTaiKhoan %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  <a href="#editEmployeeModal" class="edit" id=<%="edit" + users[i].IDNhanVien %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                  <a href="#deleteEmployeeModal" class="delete" id=<%="delete" + users[i].IDNhanVien %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                 </td>
               </tr>
+              <% } %>
               <% } %>
             </tbody>
           </table>

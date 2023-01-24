@@ -65,21 +65,21 @@
               </div>
               <div class="col-sm-6">
                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm thông tin thuốc</span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa thông tin thuốc</span></a>						
+                <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa thông tin thuốc</span></a>						 -->
               </div>
             </div>
           </div>
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>
+                <th style="display: none;">
                   <span class="custom-checkbox">
                     <input type="checkbox" id="selectAll">
                     <label for="selectAll"></label>
                   </span>
                 </th>
-                <th>Mã thuốc</th>
                 <th>Tên thuốc</th>
+                <th>Số lượng</th>
                 <th>Nhà sản xuất</th>
                 <th>Giá bán</th>
                 <th>Đơn vị</th>
@@ -91,14 +91,14 @@
             <tbody>
               <% for (let i = 0; i < drugs.length; i++) { %>
               <tr>
-                <td>
+                <td style="display: none;">
                   <span class="custom-checkbox">
                     <input type="checkbox" id=<%="checkbox" + drugs[i].IDThuoc %> name="options[]" value="1">
                     <label for="checkbox1"></label>
                   </span>
                 </td>
-                <td><%=drugs[i].MaThuoc%></td>
                 <td><%=drugs[i].TenThuoc%></td>
+                <td><%=drugs[i].SoLuong%></td>
                 <td><%=drugs[i].NSX%></td>
                 <td><%=drugs[i].GiaBan%></td>
                 <td><%=drugs[i].DonVi%></td>

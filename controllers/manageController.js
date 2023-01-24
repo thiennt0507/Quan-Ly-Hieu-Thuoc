@@ -31,7 +31,7 @@ const getDrug = (req, res) => {
 
 const createDrug = (req, res) => {
   const query = `insert into 
-                 thuoc (MaThuoc, 
+                 thuoc ( 
                         TenThuoc,
                         NSX,
                         NhomThuoc, 
@@ -46,7 +46,7 @@ const createDrug = (req, res) => {
                         PhanTacDung, 
                         DangBaoChe, 
                         BaoQuan)
-                 values ("${req.body.MaThuoc}", 
+                 values ( 
                          "${req.body.TenThuoc}",
                          "${req.body.NSX}",
                          "${req.body.NhomThuoc}",
@@ -75,7 +75,7 @@ const createDrug = (req, res) => {
 
 const updateDrug = (req, res) => {
   const query = `update thuoc
-                 set MaThuoc = "${req.body.MaThuoc}",
+                 set 
                      TenThuoc = "${req.body.TenThuoc}",
                      NSX = "${req.body.NSX}",
                      NhomThuoc = "${req.body.NhomThuoc}",
@@ -91,6 +91,23 @@ const updateDrug = (req, res) => {
                      DangBaoChe = "${req.body.DangBaoChe}",
                      BaoQuan = "${req.body.BaoQuan}"
                  where IDThuoc = ${req.params.id}`;
+  connection.query(query, (err, result) => {
+    if (err) {
+      throw new Error(err);
+    } else {
+      res.status(200).json({
+        status: "OK",
+        result,
+      });
+    }
+  });
+};
+
+const changeQuantityDrug = (req, res) => {
+  const query = `update thuoc set SoLuong = SoLuong ${
+    req.params.type === "in" ? "+" : "-"
+  } ${req.body.SoLuong} where IDThuoc = ${req.params.id}`;
+  console.log(query);
   connection.query(query, (err, result) => {
     if (err) {
       throw new Error(err);
@@ -122,4 +139,5 @@ module.exports = {
   createDrug,
   updateDrug,
   deleteDrug,
+  changeQuantityDrug,
 };

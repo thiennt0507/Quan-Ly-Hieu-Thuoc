@@ -2,8 +2,8 @@ DROP
     DATABASE IF EXISTS QuanLyHieuThuoc;
 CREATE DATABASE QuanLyHieuThuoc DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; USE
     QuanLyHieuThuoc;
-CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
-    IDTaiKhoan INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.NhanVien(
+    IDNhanVien INT PRIMARY KEY AUTO_INCREMENT,
     TaiKhoan VARCHAR(100) NOT NULL UNIQUE,
     MatKhau VARCHAR(100) NOT NULL,
     HoTen VARCHAR(100) NOT NULL,
@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
     NgaySinh DATE NOT NULL,
     Email VARCHAR(100) NOT NULL,
     DienThoai VARCHAR(100) NOT NULL,
-    ChucVu INT NOT NULL,
-    IsLogin INT NOT NULL DEFAULT 0
+    ChucVu INT NOT NULL
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.NhaPhanPhoi(
     IDNhaPhanPhoi INT PRIMARY KEY AUTO_INCREMENT,
     TenNPP VARCHAR(100) NOT NULL,
@@ -22,7 +21,6 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
     Email VARCHAR(100) NOT NULL
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.Thuoc(
     IDThuoc INT PRIMARY KEY AUTO_INCREMENT,
-    MaThuoc VARCHAR(50) NOT NULL,
     TenThuoc VARCHAR(100) NOT NULL,
     NSX VARCHAR(100) NOT NULL,
     NhomThuoc VARCHAR(100) NOT NULL,
@@ -45,11 +43,13 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.HoaDonNhap(
     IDHoaDonNhap INT PRIMARY KEY AUTO_INCREMENT,
     IDNhaPhanPhoi INT NOT NULL,
+    IDNhanVien INT NOT NULL,
     TongTienThuoc DECIMAL(15, 4) NOT NULL,
     TongThue FLOAT NOT NULL,
     TongTienHDN DECIMAL(15, 4) NOT NULL,
     NgayNhap DATETIME NOT NULL,
-    FOREIGN KEY(IDNhaPhanPhoi) REFERENCES QuanLyHieuThuoc.NhaPhanPhoi(IDNhaPhanPhoi)
+    FOREIGN KEY(IDNhaPhanPhoi) REFERENCES QuanLyHieuThuoc.NhaPhanPhoi(IDNhaPhanPhoi),
+    FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien)
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.ChiTietHoaDonNhap(
     IDChiTietHDN INT PRIMARY KEY AUTO_INCREMENT,
     IDHoaDonNhap INT NOT NULL,
@@ -60,19 +60,19 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.TaiKhoan(
     FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc)
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.HoaDonXuat(
     IDHoaDonXuat INT PRIMARY KEY AUTO_INCREMENT,
-    IDKhachHang INT,
-    NgayLap DATETIME NOT NULL,
+    IDKhachHang INT NOT NULL,
+    IDNhanVien INT NOT NULL,
+    NgayXuat DATETIME NOT NULL,
     TongTienThuoc DECIMAL(15, 4) NOT NULL,
     TongThue FLOAT NOT NULL,
-    TongTienHD DECIMAL(15, 4) NOT NULL,
-    FOREIGN KEY(IDKhachHang) REFERENCES QuanLyHieuThuoc.KhachHang(IDKhachHang)
+    TongTienHDX DECIMAL(15, 4) NOT NULL,
+    FOREIGN KEY(IDKhachHang) REFERENCES QuanLyHieuThuoc.KhachHang(IDKhachHang),
+    FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien)
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.ChiTietHoaDonXuat(
     IDChiTietHDX INT PRIMARY KEY AUTO_INCREMENT,
     IDHoaDonXuat INT NOT NULL,
     IDThuoc INT NOT NULL,
     SoLuong INT NOT NULL,
-    GiaBan DECIMAL(15, 4) NOT NULL,
-    Thue FLOAT NOT NULL,
     FOREIGN KEY(IDHoaDonXuat) REFERENCES QuanLyHieuThuoc.HoaDonXuat(IDHoaDonXuat),
     FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc)
 );

@@ -39,7 +39,7 @@ let username = document.getElementsByClassName("dropbtn")[0].innerText;
 let logout = document.getElementsByClassName("dropdown-content")[0];
 
 let checklogin = async () => {
-  let response = await fetch("http://localhost:3000/loginpage/role", {
+  let response = await fetch("http://localhost:3000/loginpage/checklogin", {
     method: "GET",
     headers: {
       accept: "application/json",

@@ -68,14 +68,14 @@
               </div>
               <div class="col-sm-6">
                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm nhà phân phôi</span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa nhà phân phối</span></a>						
+                <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa nhà phân phối</span></a>						 -->
               </div>
             </div>
           </div>
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>
+                <th style="display: none">
                   <span class="custom-checkbox">
                     <input type="checkbox" id="selectAll">
                     <label for="selectAll"></label>
@@ -92,8 +92,8 @@
             <tbody>
               <% for(let i = 0; i < distributors.length; i++) { %> 
                 <tr class="row-client">
-                  <td>
-                    <span class="custom-checkbox">
+                  <td style="display: none">
+                    <span class="custom-checkbox" >
                       <input type="checkbox" id=<%="checkbox" + distributors[i].IDNhaPhanPhoi %> name="options[]" value="1">
                       <label for=<%="checkbox" + distributors[i].IDNhaPhanPhoi %>></label>
                     </span>

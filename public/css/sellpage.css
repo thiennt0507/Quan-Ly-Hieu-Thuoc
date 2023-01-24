@@ -82,11 +82,17 @@ table.table td a {
 table.table td a:hover {
   color: #2196f3;
 }
-table.table td a.edit {
+table.table td a.edit,
+table.table td a.edit-CTHD {
   color: #ffc107;
 }
-table.table td a.delete {
+table.table td a.delete,
+table.table td a.delete-CTHD {
   color: #f44336;
+}
+table.table td a.export-CTHD,
+table.table td a.export {
+  color: #4c74d9;
 }
 table.table td i {
   font-size: 19px;

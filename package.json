@@ -7,6 +7,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mysql": "^2.18.1",
+    "mysql-await": "^2.2.2",
     "node-fetch": "^2.6.6"
   },
   "scripts": {

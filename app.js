@@ -11,8 +11,11 @@ const loginRouter = require("./routes/loginRouter");
 const distributorRouter = require("./routes/distributorRouter");
 const manageRouter = require("./routes/manageRouter");
 const CTHDNRouter = require("./routes/CTHDNRouter");
+const CTHDXRouter = require("./routes/CTHDXRouter");
 const HDNRouter = require("./routes/HDNRouter");
+const HDXRouter = require("./routes/HDXRouter");
 const CTHDNSessionRouter = require("./routes/CTHDNSessionRouter");
+const CTHDXSessionRouter = require("./routes/CTHDXSessionRouter");
 
 const app = express();
 
@@ -23,7 +26,7 @@ app.use(
     secret: "secret",
     resave: true,
     cookie: { maxAge: 864000 },
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
@@ -67,5 +70,13 @@ app.use("/importpage/HDN", HDNRouter);
 
 // ctdhn routes
 app.use("/importpage/CTHDNSession", CTHDNSessionRouter);
+
+// cthdx routes
+app.use("/sellpage/CTHDX", CTHDXRouter);
+
+// hdx routes
+app.use("/sellpage/HDX", HDXRouter);
+
+app.use("/sellpage/CTHDXSession", CTHDXSessionRouter);
 
 module.exports = app;

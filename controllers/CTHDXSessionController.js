@@ -2,10 +2,10 @@ let session = require("express-session");
 // let cookieParser = require("cookie-parser");
 var sess;
 
-const getAllCTHDN = (req, res) => {
+const getAllCTHDX = (req, res) => {
   try {
     // sess = req.session;
-    let result = sess.CTHDN ? sess.CTHDN : [];
+    let result = sess.CTHDX ? sess.CTHDX : [];
     console.log(result);
     res.status(200).json({
       status: "OK",
@@ -13,30 +13,30 @@ const getAllCTHDN = (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "Empty CTHDN",
+      status: "Empty CTHDX",
       message: err.message,
     });
   }
 };
 
-const selectCTHDN = (req, res) => {
-  if (!sess || !sess.CTHDN) {
+const selectCTHDX = (req, res) => {
+  if (!sess || !sess.CTHDX) {
     sess = req.session;
-    sess.CTHDN = [];
+    sess.CTHDX = [];
   }
-  sess.CTHDN.push(req.body);
-  const result = sess.CTHDN;
+  sess.CTHDX.push(req.body);
+  const result = sess.CTHDX;
   res.status(200).json({
     status: "success",
     result,
   });
 };
 
-const updateCTHDN = (req, res) => {
+const updateCTHDX = (req, res) => {
   try {
     sess = req.session;
-    sess.CTHDN.splice(req.params.id, 1, req.body);
-    const result = sess.CTHDN;
+    sess.CTHDX.splice(req.params.id, 1, req.body);
+    const result = sess.CTHDX;
     res.status(201).json({
       status: "success",
       result,
@@ -49,26 +49,26 @@ const updateCTHDN = (req, res) => {
   }
 };
 
-const deleteCTHDN = (req, res) => {
+const deleteCTHDX = (req, res) => {
   // sess = req.session;
-  sess.CTHDN.splice(req.params.id, 1);
+  sess.CTHDX.splice(req.params.id, 1);
   res.status(204).json({
     status: "success",
   });
 };
 
-const deleteAllCTHDN = (req, res) => {
+const deleteAllCTHDX = (req, res) => {
   sess = req.session;
-  sess.CTHDN ? sess.CTHDN.splice(0, sess.CTHDN.length) : sess.CTHDN;
+  sess.CTHDX ? sess.CTHDX.splice(0, sess.CTHDX.length) : sess.CTHDX;
   res.status(204).json({
     status: "success",
   });
 };
 
 module.exports = {
-  getAllCTHDN,
-  selectCTHDN,
-  updateCTHDN,
-  deleteCTHDN,
-  deleteAllCTHDN,
+  getAllCTHDX,
+  selectCTHDX,
+  updateCTHDX,
+  deleteCTHDX,
+  deleteAllCTHDX,
 };

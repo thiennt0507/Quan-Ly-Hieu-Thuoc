@@ -1,7 +1,7 @@
 const connection = require("../database/connectdb");
 
 const getAllUsers = (req, res) => {
-  const query = `Select * from taikhoan`;
+  const query = `Select *, DATE_FORMAT(NgaySinh, '%Y/%d/%m %H:%i') as NS from nhanvien`;
 
   connection.query(query, (err, result) => {
     if (err) {
@@ -16,8 +16,8 @@ const getAllUsers = (req, res) => {
 
 const getUserById = (req, res) => {
   console.log("getUserById");
-  const query = `SELECT * FROM taikhoan 
-                 WHERE IDTaiKhoan = '${req.params.id}'`;
+  const query = `SELECT * FROM nhanvien 
+                 WHERE IDNhanVien = '${req.params.id}'`;
   connection.query(query, (err, result) => {
     if (err) {
       throw err;
@@ -31,7 +31,7 @@ const getUserById = (req, res) => {
 
 const createUser = (req, res) => {
   console.log("createUser");
-  const query = `INSERT INTO taikhoan (TaiKhoan, MatKhau, HoTen, DiaChi, NgaySinh, Email, DienThoai, ChucVu)
+  const query = `INSERT INTO nhanvien (TaiKhoan, MatKhau, HoTen, DiaChi, NgaySinh, Email, DienThoai, ChucVu)
                   VALUES ("${req.body.TaiKhoan}",
                           "${req.body.MatKhau}", 
                           "${req.body.HoTen}", 
@@ -54,7 +54,7 @@ const createUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const query = `UPDATE 
-                     TaiKhoan 
+                     nhanvien 
                  SET TaiKhoan = "${req.body.TaiKhoan}",
                      MatKhau = "${req.body.MatKhau}", 
                      HoTen = "${req.body.HoTen}", 
@@ -64,7 +64,7 @@ const updateUser = (req, res) => {
                      DienThoai = "${req.body.DienThoai}", 
                      ChucVu = "${req.body.ChucVu}"
                   WHERE 
-                     IDTaiKhoan = ${req.params.id}
+                     IDNhanVien = ${req.params.id}
                      `;
   console.log("Update user");
   connection.query(query, (err, result) => {
@@ -81,8 +81,8 @@ const updateUser = (req, res) => {
 
 const deleteUser = (req, res) => {
   console.log("Delete user");
-  const query = `DELETE FROM taikhoan 
-                 WHERE IDTaiKhoan = ${req.params.id} `;
+  const query = `DELETE FROM nhanvien 
+                 WHERE IDNhanVien = ${req.params.id} `;
   connection.query(query, (err, result) => {
     if (err) {
       throw err;
@@ -96,7 +96,7 @@ const deleteUser = (req, res) => {
 
 const getUserByUserName = (req, res) => {
   console.log("Get User name");
-  const query = `SELECT * FROM taikhoan 
+  const query = `SELECT * FROM nhanvien 
                  WHERE TaiKhoan = '${req.params.TaiKhoan}'`;
   connection.query(query, (err, result) => {
     if (err) {
@@ -109,22 +109,8 @@ const getUserByUserName = (req, res) => {
   });
 };
 
-const updateLoginUser = (req, res) => {
-  const query = `UPDATE taikhoan SET IsLogin = '${req.params.IsLogin}' WHERE TaiKhoan = '${req.params.TaiKhoan}'`;
-  connection.query(query, (err, result) => {
-    if (err) {
-      throw err;
-    } else {
-      res.status(201).json({
-        result,
-      });
-    }
-  });
-};
-
 module.exports = {
   getUserByUserName,
-  updateLoginUser,
   getAllUsers,
   getUserById,
   createUser,

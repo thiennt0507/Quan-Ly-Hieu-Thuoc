@@ -37,7 +37,7 @@ let username = document.getElementsByClassName("dropbtn")[0].innerText;
 let logout = document.getElementsByClassName("dropdown-content")[0];
 
 let checklogin = async () => {
-  let response = await fetch("http://localhost:3000/loginpage/role", {
+  let response = await fetch("http://localhost:3000/loginpage/checklogin", {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -159,7 +159,7 @@ for (let edit of listEdit) {
             NgaySinh: editBirth.value,
             Email: editEmail.value,
             DienThoai: editPhone.value,
-            ChucVu: editRole.value.toLowerCase().trim() == "admin" ? 1 : 0,
+            ChucVu: editRole.value.toLowerCase().trim() == "admin" ? 1 : 2,
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",

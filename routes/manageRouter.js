@@ -12,5 +12,6 @@ router
   .get(manageController.getDrug)
   .patch(manageController.updateDrug)
   .delete(manageController.deleteDrug);
+router.route("/:id/:type").patch(manageController.changeQuantityDrug);
 
 module.exports = router;

@@ -71,14 +71,14 @@
               </div>
               <div class="col-sm-6">
                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm khách hàng</span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa khách hàng</span></a>						
+                <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa khách hàng</span></a>						 -->
               </div>
             </div>
           </div>
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>
+                <th style="display: none;">
                   <span class="custom-checkbox">
                     <input type="checkbox" id="selectAll">
                     <label for="selectAll"></label>
@@ -93,7 +93,7 @@
             <tbody>
               <% for(let i = 0; i < clients.length; i++) { %> 
                 <tr class="row-client">
-                  <td>
+                  <td style="display: none;">
                     <span class="custom-checkbox">
                       <input type="checkbox" id=<%="checkbox" + clients[i].IDKhachHang %> name="options[]" value="1">
                       <label for=<%="checkbox" + clients[i].IDKhachHang %>></label>
@@ -212,7 +212,7 @@
       let logout = document.getElementsByClassName("dropdown-content")[0];
 
       let checklogin = async () => {
-        let response = await fetch("http://localhost:3000/loginpage/role", {
+        let response = await fetch("http://localhost:3000/loginpage/checklogin", {
           method: "GET",
           headers: {
             accept: "application/json",
