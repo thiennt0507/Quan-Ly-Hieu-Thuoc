@@ -37,7 +37,6 @@ const getClientsPage = async (req, res) => {
 
   data = await response.json();
   let result_1 = data.result;
-  console.log(result);
 
   res.render("clientspage.ejs", {
     clients: result,
