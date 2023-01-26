@@ -112,7 +112,21 @@ for (let edit of listEdit) {
     editPassword.value = data.MatKhau;
     editEmail.value = data.Email;
     editAddress.value = data.DiaChi;
-    editBirth.value = data.NgaySinh.slice(0, 10);
+    //
+    const date = new Date(data.NgaySinh)
+      .toLocaleDateString("en-US", {
+        timeZone: "Asia/Jakarta",
+      })
+      .split("/");
+    console.log(
+      new Date(data.NgaySinh).toLocaleDateString("en-US", {
+        timeZone: "Asia/Jakarta",
+      })
+    );
+    editBirth.value = `${date[2]}-${date[1] >= 10 ? date[1] : "0" + date[1]}-${
+      date[0] >= 10 ? date[0] : "0" + date[0]
+    }`;
+    // editBirth.value = data.NgaySinh.slice(0, 10);
     editPhone.value = data.DienThoai;
     editRole.value = data.ChucVu == 1 ? "Admin" : "Staff";
 

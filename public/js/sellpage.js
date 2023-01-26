@@ -72,7 +72,8 @@ let exportKH = exportform.getElementsByClassName("form-control")[0];
 let exportSumMoneyDrugs = exportform.getElementsByClassName("form-control")[1];
 let exportTax = exportform.getElementsByClassName("form-control")[2];
 let exportDate = exportform.getElementsByClassName("form-control")[3];
-
+let regexFloat = /^\d*(\.\d+)?$/;
+let regex = /^\d+$/;
 let checkboxEl = document
   .querySelector("tbody")
   .getElementsByClassName("checkbox");
@@ -89,9 +90,9 @@ for (let edit of listEdit_CTHD) {
       edit.parentElement.parentElement.getElementsByTagName("td");
     // editName.value = tdElement[1].innerText.trim();
     editQuantity.value = tdElement[2].textContent.trim();
-
-    editSubmit.onclick = () => {
-      if (editName.value && editQuantity.value) {
+    editSubmit.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (editName.value && regex.test(editQuantity.value)) {
         fetch(`http://localhost:3000/sellpage/CTHDXSession/${id}`, {
           method: "PATCH",
           body: JSON.stringify({
@@ -104,10 +105,11 @@ for (let edit of listEdit_CTHD) {
         })
           .then((res) => console.log(res))
           .catch((err) => console.log(err));
-
         window.location.reload();
+      } else {
+        alert("Bạn nhập không đúng vui lòng nhập lại");
       }
-    };
+    });
   });
 }
 
@@ -125,8 +127,9 @@ for (let del of listDelete_CTHD) {
   });
 }
 
-addCTHD.addEventListener("click", async () => {
-  if (addName.value && addQuantity.value) {
+addCTHD.addEventListener("click", async (e) => {
+  e.preventDefault();
+  if (addName.value && regex.test(addQuantity.value)) {
     fetch(`http://localhost:3000/sellpage/CTHDXSession`, {
       method: "POST",
       body: JSON.stringify({
@@ -141,6 +144,8 @@ addCTHD.addEventListener("click", async () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
     window.location.reload();
+  } else {
+    alert("Bạn nhập không đúng vui lòng nhập lại");
   }
 });
 
@@ -156,14 +161,15 @@ exportbtn.addEventListener("click", () => {
   exportSumMoneyDrugs.value = sum;
 });
 
-exportSubmitBtn.addEventListener("click", async () => {
+exportSubmitBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
   if (listEdit_CTHD.length == 0)
     alert("Hiên tại chưa có thuốc nào được chọn. Vui lòng chọn thêm.");
   else {
     if (
       exportKH.value &&
       exportSumMoneyDrugs.value &&
-      exportTax.value &&
+      regexFloat.test(exportTax.value) &&
       exportDate.value
     ) {
       const response = await fetch("http://localhost:3000/sellpage/HDX", {
@@ -224,8 +230,10 @@ exportSubmitBtn.addEventListener("click", async () => {
           );
         })
       );
+      location.reload();
+    } else {
+      alert("Bạn nhập không đúng vui lòng nhập lại");
     }
-    location.reload();
   }
 });
 
@@ -246,6 +254,11 @@ let confirmDelete_HDX = document
   .getElementById("deleteEmployeeModal")
   .getElementsByClassName("btn-danger")[0];
 
+let listExport_HDX = document.getElementsByClassName("export");
+let confirmExport_HDX = document
+  .getElementById("exportEmployeeModal")
+  .getElementsByClassName("btn-danger")[0];
+
 for (let edit of listEdit_HDX) {
   edit.addEventListener("click", () => {
     let id = edit.id.replace("editHDX", "");
@@ -259,7 +272,7 @@ for (let edit of listEdit_HDX) {
       if (
         editKH_HDX.value &&
         editSumMoneyDrugs_HDX.value &&
-        editTax_HDX.value &&
+        regexFloat.test(editTax_HDX.value) &&
         editDate_HDX.value
       ) {
         const body = JSON.stringify({
@@ -267,7 +280,7 @@ for (let edit of listEdit_HDX) {
           TongThue: editTax_HDX.value,
           TongTienHDX:
             editSumMoneyDrugs_HDX.value * (1 + editTax_HDX.value * 1),
-          NgayNhap: editDate_HDX.value,
+          NgayXuat: editDate_HDX.value,
         });
         await fetch(`http://localhost:3000/sellpage/HDX/${id}`, {
           method: "PATCH",
@@ -277,6 +290,8 @@ for (let edit of listEdit_HDX) {
           },
         });
         window.location.reload();
+      } else {
+        alert("Bạn nhập không đúng vui lòng nhập lại");
       }
     });
   });
@@ -291,5 +306,448 @@ for (let del of listDelete_HDX) {
       }).then((res) => console.log(res));
       window.location.reload();
     };
+  });
+}
+
+for (let ex of listExport_HDX) {
+  ex.addEventListener("click", async () => {
+    console.log(ex.id);
+    let id = ex.id.replace("exportHDX", "");
+    console.log(id);
+    confirmExport_HDX.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const res = await fetch(
+        `http://localhost:3000/createbill/hoadonxuat/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      const { testData, HD, dmy } = await res.json();
+
+      const table = new docx.Table({
+        rows: [
+          new docx.TableRow({
+            children: [
+              new docx.TableCell({
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: `STT`,
+                        size: 24,
+                        font: "arial",
+                        bold: true,
+                      }),
+                    ],
+                    alignment: docx.AlignmentType.CENTER,
+                  }),
+                ],
+                verticalAlign: docx.VerticalAlign.CENTER,
+              }),
+              new docx.TableCell({
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: `Tên Thuốc`,
+                        size: 24,
+                        font: "arial",
+                        bold: true,
+                      }),
+                    ],
+                    alignment: docx.AlignmentType.CENTER,
+                  }),
+                ],
+                verticalAlign: docx.VerticalAlign.CENTER,
+              }),
+              new docx.TableCell({
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: `Đơn vị`,
+                        size: 24,
+                        font: "arial",
+                        bold: true,
+                      }),
+                    ],
+                    alignment: docx.AlignmentType.CENTER,
+                  }),
+                ],
+                verticalAlign: docx.VerticalAlign.CENTER,
+              }),
+              new docx.TableCell({
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: `Số lượng`,
+                        size: 24,
+                        font: "arial",
+                        bold: true,
+                      }),
+                    ],
+                    alignment: docx.AlignmentType.CENTER,
+                  }),
+                ],
+                verticalAlign: docx.VerticalAlign.CENTER,
+              }),
+              new docx.TableCell({
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: `Đơn giá (VND)`,
+                        size: 24,
+                        font: "arial",
+                        bold: true,
+                      }),
+                    ],
+                    alignment: docx.AlignmentType.CENTER,
+                  }),
+                ],
+                verticalAlign: docx.VerticalAlign.CENTER,
+              }),
+              new docx.TableCell({
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.TextRun({
+                        text: `Thành tiền (VND)`,
+                        font: "arial",
+                        size: 24,
+                        bold: true,
+                      }),
+                    ],
+                    alignment: docx.AlignmentType.CENTER,
+                  }),
+                ],
+                verticalAlign: docx.VerticalAlign.CENTER,
+              }),
+            ],
+            tableHeader: true,
+            height: { value: 500 },
+          }),
+        ],
+        width: {
+          size: 8500,
+          type: docx.WidthType.DXA,
+        },
+      });
+
+      //
+      testData.map((data, index) => {
+        const tableRow = new docx.TableRow({
+          children: [
+            new docx.TableCell({
+              children: [
+                new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: `${index + 1}`,
+                      size: 20,
+                    }),
+                  ],
+                  alignment: docx.AlignmentType.CENTER,
+                }),
+              ],
+              verticalAlign: docx.VerticalAlign.CENTER,
+            }),
+            new docx.TableCell({
+              children: [
+                new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: `${data.Ten}`,
+                      size: 20,
+                    }),
+                  ],
+                  alignment: docx.AlignmentType.CENTER,
+                }),
+              ],
+              verticalAlign: docx.VerticalAlign.CENTER,
+            }),
+            new docx.TableCell({
+              children: [
+                new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: `${data.DonVi}`,
+                      size: 20,
+                    }),
+                  ],
+                  alignment: docx.AlignmentType.CENTER,
+                }),
+              ],
+              verticalAlign: docx.VerticalAlign.CENTER,
+            }),
+            new docx.TableCell({
+              children: [
+                new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: `${data.SoLuong}`,
+                      size: 20,
+                    }),
+                  ],
+                  alignment: docx.AlignmentType.CENTER,
+                }),
+              ],
+              verticalAlign: docx.VerticalAlign.CENTER,
+            }),
+            new docx.TableCell({
+              children: [
+                new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: `${data.DonGia}`,
+                      size: 20,
+                    }),
+                  ],
+                  alignment: docx.AlignmentType.CENTER,
+                }),
+              ],
+              verticalAlign: docx.VerticalAlign.CENTER,
+            }),
+            new docx.TableCell({
+              children: [
+                new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: `${data.ThanhTien}`,
+                      size: 20,
+                    }),
+                  ],
+                  alignment: docx.AlignmentType.CENTER,
+                }),
+              ],
+              verticalAlign: docx.VerticalAlign.CENTER,
+            }),
+          ],
+          height: { value: 300 },
+        });
+
+        table.root.push(tableRow);
+      });
+
+      const doc = new docx.Document({
+        sections: [
+          {
+            properties: {},
+            children: [
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Hóa đơn bán thuốc`,
+                    size: 40,
+                    bold: true,
+                    font: "arial",
+                  }),
+                ],
+                heading: docx.HeadingLevel.TITLE,
+                alignment: docx.AlignmentType.CENTER,
+                spacing: {
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Ngày `,
+                    size: 32,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${dmy[1]} `,
+                    size: 32,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `tháng `,
+                    size: 32,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${dmy[0]} `,
+                    size: 32,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `năm `,
+                    size: 32,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${dmy[2]}`,
+                    size: 32,
+                    font: "arial",
+                  }),
+                ],
+                alignment: docx.AlignmentType.CENTER,
+                spacing: {
+                  after: 500,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Hiệu thuốc Thiện Nguyễn                          Mã số hóa đơn: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.IDHoaDonXuat}`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Tên nhân viên: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.HoTen}`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Tên khách hàng: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.TenKhachHang}`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Số điện thoại: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.DienThoai}`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Email: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.Email}`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  after: 200,
+                },
+              }),
+              table,
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Thuế: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.Thue}`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  before: 200,
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Tổng cộng: `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                  new docx.TextRun({
+                    text: `${HD.TongTien}   VND`,
+                    size: 28,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  before: 200,
+                  after: 100,
+                },
+              }),
+              new docx.Paragraph({
+                children: [
+                  new docx.TextRun({
+                    text: `Nhân viên lập phiếu                                      Khách hàng `,
+                    size: 28,
+                    bold: true,
+                    font: "arial",
+                  }),
+                ],
+                spacing: {
+                  before: 500,
+                  after: 100,
+                },
+              }),
+            ],
+          },
+        ],
+      });
+
+      console.log(doc);
+
+      docx.Packer.toBlob(doc).then((blob) => {
+        saveAs(blob, `Hoa_Don_Xuat_${HD.IDHoaDonXuat}_${Date.now()}`);
+        console.log("Document created successfully");
+      });
+    });
   });
 }

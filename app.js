@@ -16,7 +16,8 @@ const HDNRouter = require("./routes/HDNRouter");
 const HDXRouter = require("./routes/HDXRouter");
 const CTHDNSessionRouter = require("./routes/CTHDNSessionRouter");
 const CTHDXSessionRouter = require("./routes/CTHDXSessionRouter");
-
+const createDocxRouter = require("./routes/createDocxRouter");
+const emailRouter = require("./routes/emailRouter");
 const app = express();
 
 // app.use(cookieParser());
@@ -78,5 +79,12 @@ app.use("/sellpage/CTHDX", CTHDXRouter);
 app.use("/sellpage/HDX", HDXRouter);
 
 app.use("/sellpage/CTHDXSession", CTHDXSessionRouter);
+
+// create hoa don
+
+app.use("/createbill", createDocxRouter);
+
+// create bao cao
+app.use("/sendemail", emailRouter);
 
 module.exports = app;

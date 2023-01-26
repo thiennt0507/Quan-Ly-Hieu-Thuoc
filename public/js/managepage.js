@@ -65,21 +65,20 @@ logout.addEventListener("click", async () => {
 let addUser = document.getElementsByClassName("btn-success")[1];
 
 let addform = document.getElementById("addEmployeeModal");
-let addMaThuoc = addform.getElementsByClassName("form-control")[0];
-let addTenThuoc = addform.getElementsByClassName("form-control")[1];
-let addNSX = addform.getElementsByClassName("form-control")[2];
-let addNhomThuoc = addform.getElementsByClassName("form-control")[3];
-let addSoLuong = addform.getElementsByClassName("form-control")[4];
-let addGiaBan = addform.getElementsByClassName("form-control")[5];
-let addDonVi = addform.getElementsByClassName("form-control")[6];
-let addThanhPhan = addform.getElementsByClassName("form-control")[7];
-let addHamLuong = addform.getElementsByClassName("form-control")[8];
-let addCachDung = addform.getElementsByClassName("form-control")[9];
-let addHanSuDung = addform.getElementsByClassName("form-control")[10];
-let addCongDung = addform.getElementsByClassName("form-control")[11];
-let addPhanTacDung = addform.getElementsByClassName("form-control")[12];
-let addDangBaoChe = addform.getElementsByClassName("form-control")[13];
-let addBaoQuan = addform.getElementsByClassName("form-control")[14];
+let addTenThuoc = addform.getElementsByClassName("form-control")[0];
+let addNSX = addform.getElementsByClassName("form-control")[1];
+let addNhomThuoc = addform.getElementsByClassName("form-control")[2];
+let addSoLuong = addform.getElementsByClassName("form-control")[3];
+let addGiaBan = addform.getElementsByClassName("form-control")[4];
+let addDonVi = addform.getElementsByClassName("form-control")[5];
+let addThanhPhan = addform.getElementsByClassName("form-control")[6];
+let addHamLuong = addform.getElementsByClassName("form-control")[7];
+let addCachDung = addform.getElementsByClassName("form-control")[8];
+let addHanSuDung = addform.getElementsByClassName("form-control")[9];
+let addCongDung = addform.getElementsByClassName("form-control")[10];
+let addPhanTacDung = addform.getElementsByClassName("form-control")[11];
+let addDangBaoChe = addform.getElementsByClassName("form-control")[12];
+let addBaoQuan = addform.getElementsByClassName("form-control")[13];
 let addSubmit = addform.getElementsByClassName("btn-info")[0];
 
 let deleteUsers = document.getElementsByClassName("btn-danger")[0];
@@ -87,27 +86,27 @@ let confirmDelete = document.getElementsByClassName("btn-danger")[1];
 let listEdit = document.getElementsByClassName("edit");
 
 let editform = document.getElementById("editEmployeeModal");
-let editMaThuoc = editform.getElementsByClassName("form-control")[0];
-let editTenThuoc = editform.getElementsByClassName("form-control")[1];
-let editNSX = editform.getElementsByClassName("form-control")[2];
-let editNhomThuoc = editform.getElementsByClassName("form-control")[3];
-let editSoLuong = editform.getElementsByClassName("form-control")[4];
-let editGiaBan = editform.getElementsByClassName("form-control")[5];
-let editDonVi = editform.getElementsByClassName("form-control")[6];
-let editThanhPhan = editform.getElementsByClassName("form-control")[7];
-let editHamLuong = editform.getElementsByClassName("form-control")[8];
-let editCachDung = editform.getElementsByClassName("form-control")[9];
-let editHanSuDung = editform.getElementsByClassName("form-control")[10];
-let editCongDung = editform.getElementsByClassName("form-control")[11];
-let editPhanTacDung = editform.getElementsByClassName("form-control")[12];
-let editDangBaoChe = editform.getElementsByClassName("form-control")[13];
-let editBaoQuan = editform.getElementsByClassName("form-control")[14];
+let editTenThuoc = editform.getElementsByClassName("form-control")[0];
+let editNSX = editform.getElementsByClassName("form-control")[1];
+let editNhomThuoc = editform.getElementsByClassName("form-control")[2];
+let editSoLuong = editform.getElementsByClassName("form-control")[3];
+let editGiaBan = editform.getElementsByClassName("form-control")[4];
+let editDonVi = editform.getElementsByClassName("form-control")[5];
+let editThanhPhan = editform.getElementsByClassName("form-control")[6];
+let editHamLuong = editform.getElementsByClassName("form-control")[7];
+let editCachDung = editform.getElementsByClassName("form-control")[8];
+let editHanSuDung = editform.getElementsByClassName("form-control")[9];
+let editCongDung = editform.getElementsByClassName("form-control")[10];
+let editPhanTacDung = editform.getElementsByClassName("form-control")[11];
+let editDangBaoChe = editform.getElementsByClassName("form-control")[12];
+let editBaoQuan = editform.getElementsByClassName("form-control")[13];
 let editSubmit = editform.getElementsByClassName("btn-info")[0];
 
 let listDelete = document.getElementsByClassName("delete");
 
 let deleteform = document.getElementById("deleteEmployeeModal");
-
+let regexFloat = /^\d*(\.\d+)?$/;
+let regex = /^\d+$/;
 for (let edit of listEdit) {
   edit.addEventListener("click", async () => {
     let id = edit.id.replace("edit", "");
@@ -123,7 +122,6 @@ for (let edit of listEdit) {
 
     data = (await response.json()).result[0];
 
-    editMaThuoc.value = data.MaThuoc;
     editTenThuoc.value = data.TenThuoc;
     editNSX.value = data.NSX;
     editNhomThuoc.value = data.NhomThuoc;
@@ -133,20 +131,28 @@ for (let edit of listEdit) {
     editThanhPhan.value = data.ThanhPhan;
     editHamLuong.value = data.HamLuong;
     editCachDung.value = data.CachDung;
-    editHanSuDung.value = data.HanSuDung.slice(0, 10);
+    //
+    const date = new Date(data.HanSuDung)
+      .toLocaleDateString("en-US", {
+        timeZone: "Asia/Jakarta",
+      })
+      .split("/");
+    editHanSuDung.value = `${date[2]}-${
+      date[0] >= 10 ? date[0] : "0" + date[0]
+    }-${date[1] >= 10 ? date[1] : "0" + date[1]}`;
     editCongDung.value = data.CongDung;
     editPhanTacDung.value = data.PhanTacDung;
     editDangBaoChe.value = data.DangBaoChe;
     editBaoQuan.value = data.BaoQuan;
 
-    editSubmit.onclick = () => {
+    editSubmit.addEventListener("click", (e) => {
+      e.preventDefault();
       if (
-        editMaThuoc.value &&
         editTenThuoc.value &&
         editNSX.value &&
         editNhomThuoc.value &&
-        editSoLuong.value &&
-        editGiaBan.value &&
+        regex.test(editSoLuong.value) &&
+        regexFloat.test(editGiaBan.value) &&
         editDonVi.value &&
         editThanhPhan.value &&
         editHamLuong.value &&
@@ -160,7 +166,6 @@ for (let edit of listEdit) {
         fetch(`http://localhost:3000/managepage/drugs/${id}`, {
           method: "PATCH",
           body: JSON.stringify({
-            MaThuoc: editMaThuoc.value,
             TenThuoc: editTenThuoc.value,
             NSX: editNSX.value,
             NhomThuoc: editNhomThuoc.value,
@@ -183,8 +188,10 @@ for (let edit of listEdit) {
           .then((res) => console.log(res))
           .catch((err) => console.log(err));
         window.location.reload();
+      } else {
+        alert("Bạn nhập không đúng vui lòng nhập lại");
       }
-    };
+    });
   });
 }
 
@@ -201,14 +208,14 @@ for (let del of listDelete) {
     };
   });
 }
-addUser.addEventListener("click", async () => {
+addUser.addEventListener("click", async (e) => {
+  e.preventDefault();
   if (
-    addMaThuoc.value &&
     addTenThuoc.value &&
     addNSX.value &&
     addNhomThuoc.value &&
-    addSoLuong.value &&
-    addGiaBan.value &&
+    regex.test(addSoLuong.value) &&
+    regexFloat.test(addGiaBan.value) &&
     addDonVi.value &&
     addThanhPhan.value &&
     addHamLuong.value &&
@@ -222,7 +229,6 @@ addUser.addEventListener("click", async () => {
     fetch(`http://localhost:3000/managepage/drugs`, {
       method: "POST",
       body: JSON.stringify({
-        MaThuoc: addMaThuoc.value,
         TenThuoc: addTenThuoc.value,
         NSX: addNSX.value,
         NhomThuoc: addNhomThuoc.value,
@@ -246,5 +252,7 @@ addUser.addEventListener("click", async () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
     window.location.reload();
+  } else {
+    alert("Bạn nhập không đúng vui lòng nhập lại");
   }
 });

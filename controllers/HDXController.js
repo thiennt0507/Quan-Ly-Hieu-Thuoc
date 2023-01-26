@@ -56,6 +56,7 @@ const updateHDX = (req, res) => {
   const query = `update hoadonxuat
                  set IDKhachHang= "${req.body.IDKhachHang}", TongThue="${req.body.TongThue}", TongTienHDX="${req.body.TongTienHDX}", NgayXuat="${req.body.NgayXuat}"
                  where IDHoaDonXuat = ${req.params.id}`;
+  console.log(query);
   connection.query(query, (err, result) => {
     if (err) {
       throw new Error(err);

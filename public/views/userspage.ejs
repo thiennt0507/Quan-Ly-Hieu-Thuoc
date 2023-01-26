@@ -17,13 +17,13 @@
     />
 
       <!-- Giao dien chia 3 -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
   
   
       <!-- search -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
       <!--  -->
@@ -33,7 +33,7 @@
     <style></style>
     <title>Tài Khoản</title>
   </head>
-  <body>
+  <body style="background-color: #f1f1f1">
     <div class="topnav" id="myTopnav">
       <a href="http://localhost:3000/homepage"">Trang Chủ</a>
       <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
@@ -112,7 +112,8 @@
                 <td><%=users[i].TaiKhoan%></td>
                 <td><%=users[i].Email%></td>
                 <td><%=users[i].DiaChi%></td>
-                <td><%=users[i].NgaySinh.slice(0,10)%></td>
+                <% const date = new Date(`${users[i].NgaySinh}`).toLocaleDateString("en-US", {timeZone: "Asia/Jakarta",}).split('/') %>
+                <td><%=`${date[2]}-${date[0] >= 10 ? date[0] : '0' + date[0]}-${date[1] >= 10 ? date[1] : '0' + date[1]}`%></td>
                 <td><%=users[i].DienThoai%></td>
                 <td>
                   <a href="#editEmployeeModal" class="edit" id=<%="edit" + users[i].IDNhanVien %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>

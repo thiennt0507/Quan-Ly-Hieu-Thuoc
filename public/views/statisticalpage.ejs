@@ -8,11 +8,60 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
+        <!--  -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <!--  -->
+
     <link rel="stylesheet" href="/css/homepage.css" />
-    <style></style>
+    <style>
+      body {font-family: Arial, Helvetica, sans-serif;}
+      * {box-sizing: border-box;}
+      
+      .form-inline {  
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+      }
+      
+      .form-inline label {
+        margin: 5px 10px 5px 0;
+      }
+      
+      .form-inline input {
+        vertical-align: middle;
+        margin: 5px 10px 5px 0;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+      }
+      
+      .form-inline button {
+        padding: 10px 20px;
+        background-color: dodgerblue;
+        border: 1px solid #ddd;
+        color: white;
+        cursor: pointer;
+      }
+      
+      .form-inline button:hover {
+        background-color: royalblue;
+      }
+      
+      @media (max-width: 800px) {
+        .form-inline input {
+          margin: 10px 0;
+        }
+        
+        .form-inline {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+      </style>
     <title>Thống kê</title>
   </head>
-  <body>
+  <body style="background-image: url('https://img.freepik.com/free-photo/shopping-cart-with-pill-foils-copy-space_23-2148533453.jpg?w=2000');">
     <div class="topnav" id="myTopnav">
       <a href="http://localhost:3000/homepage"">Trang Chủ</a>
       <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
@@ -39,9 +88,27 @@
       </a>
     </div>
 
-    <div style="padding-left: 16px">
-      <h2>Responsive Topnav Example</h2>
-      <p>Resize the browser window to see how it works.</p>
+    <div class="BCDT" style="margin-top: 100px; margin-left: 200px;">
+      <h2><b>Báo cáo doanh thu</b></h2>
+      <p>Báo cáo doanh thu các hóa đơn xuất trong một khoảng thời gian</p>
+      <p>Nhập số ngày cần báo và thời gian mong muốn</p>
+      <p>Ví dụ: 20 và 1/30/2023 sẽ báo cáo từ 1/10/2023 đến 1/30/2023</p>
+  
+      <form class="form-inline">
+        <label for="number">Số ngày:</label>
+        <input type="text" id="number" placeholder="Nhập số ngày" name="number">
+        <label for="date">Ngày:</label>
+        <input type="date" id="date" placeholder="Nhập ngày" name="date">
+        <button type="button" id="btn-BCDT">Báo cáo doanh thu</button>
+      </form>
+    </div>
+
+    <div class="BCTK" style="margin-top: 50px; margin-left: 200px;">
+      <h2><b>Báo cáo thống kê hàng tồn kho</b></h2>
+      <p>Thống kê số lượng thuốc hiện còn, hiện ghi chú về hạn sử dụng của thuốc</p>
+      <form class="form-inline">
+        <button type="button" id="btn-TTTK">Thống kê tồn kho</button>
+      </form>
     </div>
 
     <script>
@@ -53,7 +120,6 @@
           x.className = "topnav";
         }
       }
-
       //  Check login status
       let username = document.getElementsByClassName("dropbtn")[0].innerText;
       let logout = document.getElementsByClassName("dropdown-content")[0];
@@ -81,6 +147,46 @@
         });
         window.location = "http://localhost:3000";
       });
+      let regex = /^\d+$/;
+      const numDay = document.getElementById("number");
+      const date = document.getElementById("date")
+      const btn_BCDT = document.getElementById("btn-BCDT");
+      const btn_TTTK = document.getElementById("btn-TTTK");
+      btn_BCDT.addEventListener("click", async () => {
+        const body = JSON.stringify({
+              num: numDay.value,
+              date: date.value
+            })
+            console.log(body) 
+        if (regex.test(numDay.value) && date.value) {
+          const res = await fetch(`http://localhost:3000/sendemail/BCDT`, {
+            method: "POST",
+            body,
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          })
+          const result = await res.json();
+          if (result.status === 'success') 
+            alert("Gửi báo cáo thành công")
+            else alert("Xảy ra lỗi vui lòng gửi lại")
+        } else {
+          alert("Bạn nhập không đúng vui lòng nhập lại");
+        }
+      })
+      btn_TTTK.addEventListener("click", async () => {
+        const res = await fetch(`http://localhost:3000/sendemail/TKHTK`, {
+            method: "GET",
+            headers: {
+            Accept: "application/json",
+          },
+          })
+          const result = await res.json();
+          if (result.status === 'success') 
+            alert("Gửi báo cáo thành công")
+            else alert("Xảy ra lỗi vui lòng gửi lại")
+      })
     </script>
   </body>
 </html>

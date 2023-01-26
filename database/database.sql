@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.NhanVien(
     TongTienThuoc DECIMAL(15, 4) NOT NULL,
     TongThue FLOAT NOT NULL,
     TongTienHDN DECIMAL(15, 4) NOT NULL,
-    NgayNhap DATETIME NOT NULL,
+    NgayNhap DATE NOT NULL,
     FOREIGN KEY(IDNhaPhanPhoi) REFERENCES QuanLyHieuThuoc.NhaPhanPhoi(IDNhaPhanPhoi),
     FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien)
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.ChiTietHoaDonNhap(
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.NhanVien(
     IDHoaDonXuat INT PRIMARY KEY AUTO_INCREMENT,
     IDKhachHang INT NOT NULL,
     IDNhanVien INT NOT NULL,
-    NgayXuat DATETIME NOT NULL,
+    NgayXuat DATE NOT NULL,
     TongTienThuoc DECIMAL(15, 4) NOT NULL,
     TongThue FLOAT NOT NULL,
     TongTienHDX DECIMAL(15, 4) NOT NULL,

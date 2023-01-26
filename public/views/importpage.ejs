@@ -61,12 +61,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
+    <!-- Docx lib -->
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <!-- Docx lib -->
+
     <link rel="stylesheet" href="/css/homepage.css" />
     <link rel="stylesheet" href="/css/importpage.css">
     <style></style>
     <title>Nhập kho thuốc</title>
   </head>
-  <body  style="background-color: #f1f1f1; padding-right: 0 !important;">  
+  <body  style="background-color: #f1f1f1;">  
     <div class="topnav" id="myTopnav">
       <a href="http://localhost:3000/homepage"">Trang Chủ</a>
       <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
@@ -335,12 +341,13 @@
                       <td><%= HDN[i].TongTienThuoc %></td>
                       <td><%= HDN[i].TongThue %></td>
                       <td><%= HDN[i].TongTienHDN %></td>
-                      <td><%= HDN[i].NgayNhap.slice(0, 10)%></td>
+                      <% const date = new Date(`${HDN[i].NgayNhap}`).toLocaleDateString("en-US", {timeZone: "Asia/Jakarta",}).split('/') %>
+                      <td><%=`${date[2]}-${date[0] >= 10 ? date[0] : '0' + date[0]}-${date[1] >= 10 ? date[1] : '0' + date[1]}`%></td>
                       <td><%= HDN[i].HoTen %></td>
                       <td style="width: 15%">
                         <a href="#editEmployeeModal" class="edit" id=<%="editHDN" + HDN[i].IDHoaDonNhap %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" id=<%="deleteHDN" + HDN[i].IDHoaDonNhap %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        <a href="#exportEmployeeModal" class="export" id=<%="exportHDN" + HDN[i].IDHoaDonNhap %>" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Export">&#xe149;</i></a>
+                        <a href="#exportEmployeeModal" class="export" id=<%="exportHDN" + HDN[i].IDHoaDonNhap %> data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Export">&#xe149;</i></a>
                       </td>
                     </tr>
                     <% } %>
@@ -528,6 +535,28 @@
               </div>
             </div>
           </div>
+
+          <!-- Export Modal HTML -->
+          <div id="exportEmployeeModal" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form>
+                  <div class="modal-header">						
+                    <h4 class="modal-title">Xuất hóa đơn để in</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  </div>
+                  <div class="modal-body">					
+                    <p>Bạn có chắc chắn muốn thực hiện mục đã chọn</p>
+                    <p class="text-warning"><small>Hành động này không thể hoàn tác.</small></p>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy bỏ">
+                    <input type="submit" class="btn btn-danger" value="Tạo hóa đơn">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>         
         </div>
       </div>
     </div>
