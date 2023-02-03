@@ -75,7 +75,7 @@ const deleteHDN = (req, res) => {
   connection.query(query, (err, result) => {
     if (err) {
       res.status(404).json({
-        status: "success",
+        status: "fail",
         message: err.message,
       });
     } else {

@@ -12,10 +12,11 @@ let checklogin = async () => {
 
   let { result } = await response.json();
   if (result === "Logout") {
-    alert("You are logout! Please login again");
+    alert("Bạn hiện không đăng nhập! Vui lòng đăng nhập trở lại");
     window.location = "http://localhost:3000";
   }
 };
+
 checklogin();
 
 logout.addEventListener("click", async () => {
@@ -599,7 +600,7 @@ for (let ex of listExport_HDN) {
               new docx.Paragraph({
                 children: [
                   new docx.TextRun({
-                    text: `Hiệu thuốc Thiện Nguyễn                          Mã số hóa đơn: `,
+                    text: `Hiệu thuốc số 09                          Mã số hóa đơn: `,
                     size: 28,
                     bold: true,
                     font: "arial",

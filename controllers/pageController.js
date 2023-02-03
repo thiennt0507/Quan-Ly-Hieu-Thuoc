@@ -223,8 +223,10 @@ const getUsersPage = async (req, res) => {
       accept: "application/json",
     },
   });
+
   let data = await response.json();
   let { result } = data;
+  console.log(result);
 
   response = await fetch(`http://localhost:3000/loginpage/checklogin`, {
     method: "GET",

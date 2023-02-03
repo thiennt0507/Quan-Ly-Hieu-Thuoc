@@ -23,7 +23,7 @@ router.route("/clientspage").get(getClientsPage);
 router.route("/userspage").get(checkRole, restrictTo(1), getUsersPage);
 router
   .route("/statisticalpage")
-  .get(checkRole, restrictTo(1, 2), getStatisticalPage);
+  .get(checkRole, restrictTo(1,2), getStatisticalPage);
 router.route("/").get(getLoginPage);
 router
   .route("/distributorspage")

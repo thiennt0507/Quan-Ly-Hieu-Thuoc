@@ -1526,6 +1526,30 @@ svg{
 </svg>
   </body>
   <script>
+    let checklogin = async () => {
+
+  let response = await fetch("http://localhost:3000/loginpage/checklogin", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  let { result } = await response.json();
+  if (result === "Logout") {
+    alert("Bạn hiện không đăng nhập! Vui lòng đăng nhập trở lại");
+    window.location = "http://localhost:3000";
+  }
+};
+ 
+  checklogin();
+
+  document.getElementsByClassName("dropdown-content")[0].addEventListener("click", async () => {
+  await fetch(`http://localhost:3000/loginpage/logout`, {
+    method: "delete",
+  });
+  window.location = "http://localhost:3000";
+});
   </script>
 </html>
 

@@ -45,7 +45,7 @@ let checklogin = async () => {
 
   let { result } = await response.json();
   if (result === "Logout") {
-    alert("You are logout! Please login again");
+    alert("Bạn hiện không đăng nhập! Vui lòng đăng nhập trở lại");
     window.location = "http://localhost:3000";
   }
 };

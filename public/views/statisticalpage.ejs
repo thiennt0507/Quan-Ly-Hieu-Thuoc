@@ -13,7 +13,14 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <!--  -->
 
+        <!-- font -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- footer -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
     <link rel="stylesheet" href="/css/homepage.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
     <style>
       body {font-family: Arial, Helvetica, sans-serif;}
       * {box-sizing: border-box;}
@@ -64,14 +71,12 @@
   <body style="background-image: url('https://img.freepik.com/free-photo/shopping-cart-with-pill-foils-copy-space_23-2148533453.jpg?w=2000');">
     <div class="topnav" id="myTopnav">
       <a href="http://localhost:3000/homepage"">Trang Chủ</a>
-      <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
+      <a href="http://localhost:3000/managepage">Quản Lý</a>
       <a href="http://localhost:3000/sellpage" >Bán Thuốc</a>
-      <a href="http://localhost:3000/importpage">Nhập Kho Thuốc</a>
+      <a href="http://localhost:3000/importpage">Nhập Kho</a>
       <a href="http://localhost:3000/clientspage">Khách Hàng </a>
-      <a href="http://localhost:3000/userspage">Tài Khoản</a>
+      <a href="http://localhost:3000/userspage">Nhân Viên</a>
       <a href="http://localhost:3000/distributorspage">Nhà Phân Phối</a>
-
-
       <a href="http://localhost:3000/statisticalpage" class="active">Thống Kê</a>
       <div class="dropdown" style="float: right">
         <button class="dropbtn">
@@ -110,6 +115,38 @@
         <button type="button" id="btn-TTTK">Thống kê tồn kho</button>
       </form>
     </div>
+
+        <!-- footer -->
+        <div class="footer-dark" style="position: fixed; bottom: 0; width: 100%; display: none;">
+          <footer>
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-6 col-md-3 item">
+                          <h3>Các dịch vụ</h3>
+                          <ul>
+                              <li><a href="#">Quản lý hóa đơn</a></li>
+                              <li><a href="#">Quản lý khách hàng</a></li>
+                              <li><a href="#">Báo cáo thống kê</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-sm-6 col-md-3 item">
+                          <h3>About</h3>
+                          <ul>
+                              <li><a href="#">Company</a></li>
+                              <li><a href="#">Team</a></li>
+                              <li><a href="#">Careers</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-md-6 item text">
+                          <h3>Hiệu thuốc số 09</h3>
+                          <p>Hiệu Thuốc Số 09 – 09 Pharmacy là nhà thuốc tây chuyên bán các sản phẩm Dược phẩm thành phẩm bao gồm: Thuốc kê đơn theo đơn bác sĩ, thuốc không kê đơn, thuốc đông y, thực phẩm bảo vệ sức khỏe, vitamin tăng cường sức khỏe.</p>
+                      </div>
+                      <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+                  </div>
+                  <p class="copyright">Company Name © 2018</p>
+              </div>
+          </footer>
+        </div>
 
     <script>
       function myFunction() {
@@ -153,12 +190,14 @@
       const btn_BCDT = document.getElementById("btn-BCDT");
       const btn_TTTK = document.getElementById("btn-TTTK");
       btn_BCDT.addEventListener("click", async () => {
+        
         const body = JSON.stringify({
               num: numDay.value,
               date: date.value
             })
             console.log(body) 
         if (regex.test(numDay.value) && date.value) {
+          btn_BCDT.textContent = "Đang gửi báo cáo...";
           const res = await fetch(`http://localhost:3000/sendemail/BCDT`, {
             method: "POST",
             body,
@@ -168,14 +207,16 @@
           },
           })
           const result = await res.json();
+          btn_BCDT.textContent ="Báo cáo doanh thu";
           if (result.status === 'success') 
             alert("Gửi báo cáo thành công")
-            else alert("Xảy ra lỗi vui lòng gửi lại")
+          else alert("Xảy ra lỗi vui lòng gửi lại")
         } else {
           alert("Bạn nhập không đúng vui lòng nhập lại");
         }
       })
       btn_TTTK.addEventListener("click", async () => {
+        btn_TTTK.textContent = "Đang gửi báo cáo...";
         const res = await fetch(`http://localhost:3000/sendemail/TKHTK`, {
             method: "GET",
             headers: {
@@ -185,7 +226,9 @@
           const result = await res.json();
           if (result.status === 'success') 
             alert("Gửi báo cáo thành công")
-            else alert("Xảy ra lỗi vui lòng gửi lại")
+          else alert("Xảy ra lỗi vui lòng gửi lại")
+          btn_TTTK.textContent = "Thống kê tồn kho";
+          
       })
     </script>
   </body>

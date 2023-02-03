@@ -390,7 +390,7 @@ exports.createBCDT = async (req, res) => {
           new Paragraph({
             children: [
               new TextRun({
-                text: `Hiệu thuốc Thiện Nguyễn`,
+                text: `Hiệu thuốc số 09`,
                 size: 28,
                 bold: true,
                 font: "arial",
@@ -829,7 +829,7 @@ exports.createTKHTK = async (req, res) => {
           new Paragraph({
             children: [
               new TextRun({
-                text: `Hiệu thuốc Thiện Nguyễn`,
+                text: `Hiệu thuốc số 09`,
                 size: 28,
                 bold: true,
                 font: "arial",

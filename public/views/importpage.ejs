@@ -23,7 +23,7 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
+  <!-- <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
     
@@ -48,7 +48,7 @@
       }
       .row.content {height: auto;} 
     }
-  </style>
+  </style> -->
       <!--  -->
 
       <!-- search -->
@@ -67,19 +67,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
     <!-- Docx lib -->
 
+    <!-- footer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
     <link rel="stylesheet" href="/css/homepage.css" />
     <link rel="stylesheet" href="/css/importpage.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <style></style>
-    <title>Nhập kho thuốc</title>
+    <title>Nhập kho</title>
   </head>
   <body  style="background-color: #f1f1f1;">  
     <div class="topnav" id="myTopnav">
       <a href="http://localhost:3000/homepage"">Trang Chủ</a>
-      <a href="http://localhost:3000/managepage">Quản Lý Thuốc</a>
+      <a href="http://localhost:3000/managepage">Quản Lý</a>
       <a href="http://localhost:3000/sellpage" >Bán Thuốc</a>
-      <a href="http://localhost:3000/importpage" class="active">Nhập Kho Thuốc</a>
+      <a href="http://localhost:3000/importpage" class="active">Nhập Kho</a>
       <a href="http://localhost:3000/clientspage">Khách Hàng </a>
-      <a href="http://localhost:3000/userspage">Tài Khoản</a>
+      <a href="http://localhost:3000/userspage">Nhân Viên</a>
       <a href="http://localhost:3000/distributorspage">Nhà Phân Phối</a>
       <a href="http://localhost:3000/statisticalpage">Thống Kê</a>
       <div class="dropdown" style="float: right">
@@ -97,7 +101,7 @@
       </a>
     </div>
     
-    <div class="container-fluid" style="margin-top: 40px" >
+    <div class="container-fluid" style="margin-top: 40px;">
       <div class="row ">
         <div class="col-sm-5 sidenav">
           <div class="container-xl">
@@ -560,6 +564,38 @@
         </div>
       </div>
     </div>
+
+      <!-- footer -->
+  <div class="footer-dark" style="position: fixed; bottom: 0; width: 100%; display: none;">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 item">
+                    <h3>Các dịch vụ</h3>
+                    <ul>
+                        <li><a href="#">Quản lý hóa đơn</a></li>
+                        <li><a href="#">Quản lý khách hàng</a></li>
+                        <li><a href="#">Báo cáo thống kê</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-md-3 item">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Company</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 item text">
+                    <h3>Hiệu thuốc số 09</h3>
+                    <p>Hiệu Thuốc Số 09 – 09 Pharmacy là nhà thuốc tây chuyên bán các sản phẩm Dược phẩm thành phẩm bao gồm: Thuốc kê đơn theo đơn bác sĩ, thuốc không kê đơn, thuốc đông y, thực phẩm bảo vệ sức khỏe, vitamin tăng cường sức khỏe.</p>
+                </div>
+                <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+            </div>
+            <p class="copyright">Company Name © 2018</p>
+        </div>
+    </footer>
+  </div>
 
     <script>
       const hdnPage = document.getElementsByClassName("hdn-page")[0];

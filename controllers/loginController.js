@@ -31,7 +31,7 @@ const checkRole = (req, res, next) => {
     name: req.session.username ? req.session.username : null,
   };
   req.user = user;
-  console.log("check role: ", req.session.userRole);
+  console.log("check role: ", req.session);
   next();
 };
 
