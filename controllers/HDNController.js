@@ -69,8 +69,7 @@ const updateHDN = (req, res) => {
 };
 
 const deleteHDN = (req, res) => {
-  const query = `delete chitiethoadonnhap.*, hoadonnhap.* from chitiethoadonnhap inner join hoadonnhap
-  where chitiethoadonnhap.IDHoaDonNhap = hoadonnhap.IDHoaDonNhap and chitiethoadonnhap.IDHoaDonNhap = "${req.params.id}"`;
+  const query = `delete from hoadonnhap where IDHoaDonNhap = "${req.params.id}"`;
   console.log(query);
   connection.query(query, (err, result) => {
     if (err) {

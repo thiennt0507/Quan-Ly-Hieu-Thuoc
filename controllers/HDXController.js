@@ -71,8 +71,7 @@ const updateHDX = (req, res) => {
 
 const deleteHDX = (req, res) => {
   connection.query(
-    `delete chitiethoadonxuat, hoadonxuat from chitiethoadonxuat inner join hoadonxuat
-    where chitiethoadonxuat.IDHoaDonXuat = hoadonxuat.IDHoaDonXuat and chitiethoadonxuat.IDHoaDonXuat = "${req.params.id}"`,
+    `delete from hoadonxuat where IDHoaDonXuat = "${req.params.id}"`,
     (err, result) => {
       if (err) {
         console.log(query);

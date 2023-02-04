@@ -8,7 +8,7 @@ const query = util.promisify(connection.query).bind(connection);
 
 const getIDUser = async (username) => {
   const result = await query(
-    `select IDNhanVien, ChucVu from nhanvien where TaiKhoan = '${username}'`
+    `select IDNhanVien, ChucVu, Email from nhanvien where TaiKhoan = '${username}'`
   );
   return result[0];
 };
@@ -18,6 +18,7 @@ const login = async (req, res) => {
   sess.username = req.body.username;
   sess.userId = (await getIDUser(sess.username)).IDNhanVien;
   sess.userRole = (await getIDUser(sess.username)).ChucVu;
+  sess.userEmail = (await getIDUser(sess.username)).Email;
   console.log(sess);
   res.status(200).json({
     status: "login successful",
@@ -29,6 +30,7 @@ const checkRole = (req, res, next) => {
     role: req.session.userRole ? req.session.userRole : null,
     id: req.session.userId ? req.session.userId : null,
     name: req.session.username ? req.session.username : null,
+    email: req.session.userEmail ? req.session.userEmail : null,
   };
   req.user = user;
   console.log("check role: ", req.session);

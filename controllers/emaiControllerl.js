@@ -441,7 +441,7 @@ exports.createBCDT = async (req, res) => {
   Packer.toBuffer(doc).then((buffer) => {
     // fs.writeFileSync("My_Document.docx", buffer);
     let mailOptions = {
-      from: "nv1@nv.com",
+      from: `${req.user.email}`,
       to: "nguyenthanhthien0507@gmail.com",
       subject: `Báo cáo doanh thu: ${date} `,
       text: "Báo cáo doanh thu",
@@ -880,7 +880,7 @@ exports.createTKHTK = async (req, res) => {
   Packer.toBuffer(doc).then((buffer) => {
     // fs.writeFileSync("My_Document.docx", buffer);
     let mailOptions = {
-      from: "nv1@nv.com",
+      from: `${req.user.email}`,
       to: "nguyenthanhthien0507@gmail.com",
       subject: `BCTK hàng tồn kho: ${date} `,
       text: "Báo cáo hàng tồn kho",

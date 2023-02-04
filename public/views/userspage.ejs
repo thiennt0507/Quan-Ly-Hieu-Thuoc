@@ -94,13 +94,13 @@
                     <label for="selectAll"></label>
                   </span>
                 </th>
-                <th>Name</th>
-                <th>Username</th>
+                <th>Họ tên</th>
+                <th>Tài khoản</th>
                 <th>Email</th>
-                <th>Address</th>
-                <th>Birth</th>
-                <th>Phone</th>
-                <th>Actions</th>
+                <th>Địa chỉ</th>
+                <th>Ngày sinh</th>
+                <th>SDT</th>
+                <th>Chỉnh sửa</th>
               </tr>
             </thead>
             <tbody>
@@ -159,20 +159,20 @@
           <div class="modal-content">
             <form>
               <div class="modal-header">						
-                <h4 class="modal-title">Add Employee</h4>
+                <h4 class="modal-title">Thêm nhân viên</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div class="modal-body">					
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Họ tên</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Username</label>
+                  <label>Tên tài khoản</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Password</label>
+                  <label>Mật khẩu</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
@@ -180,19 +180,19 @@
                   <input type="email" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Address</label>
+                  <label>Địa chỉ</label>
                   <input class="form-control" required></input>
                 </div>
                 <div class="form-group">
-                  <label>Birth</label>
+                  <label>Ngày sinh</label>
                   <input type="date" class="form-control" required></input>
                 </div>
                 <div class="form-group">
-                  <label>Phone</label>
+                  <label>Số điện thoại</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Role</label>
+                  <label>Chức vụ</label>
                   <input type="input" placeholder="Admin or Staff" class="form-control"required>
                 </div>					
               </div>
@@ -215,15 +215,15 @@
               </div>
               <div class="modal-body">					
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Họ tên</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Username</label>
+                  <label>Tên tài khoản</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Password</label>
+                  <label>Mật khẩu</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
@@ -231,19 +231,19 @@
                   <input type="email" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Address</label>
+                  <label>Địa chỉ</label>
                   <input class="form-control" required></input>
                 </div>
                 <div class="form-group">
-                  <label>Birth</label>
+                  <label>Ngày sinh</label>
                   <input type="date" class="form-control" required></input>
                 </div>
                 <div class="form-group">
-                  <label>Phone</label>
+                  <label>Số điện thoại</label>
                   <input type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label>Role</label>
+                  <label>Chức vụ</label>
                   <input type="input" placeholder="Admin or Staff" class="form-control"required>
                 </div>					
               </div>
@@ -278,7 +278,7 @@
       </div>
     </div>
     <!-- footer -->
-    <div class="footer-dark" style="position: fixed; bottom: 0; width: 100%; display: none;">
+    <div class="footer-dark" style="position: fixed; bottom: 0; width: 100%;">
       <footer>
           <div class="container">
               <div class="row">
@@ -302,9 +302,9 @@
                       <h3>Hiệu thuốc số 09</h3>
                       <p>Hiệu Thuốc Số 09 – 09 Pharmacy là nhà thuốc tây chuyên bán các sản phẩm Dược phẩm thành phẩm bao gồm: Thuốc kê đơn theo đơn bác sĩ, thuốc không kê đơn, thuốc đông y, thực phẩm bảo vệ sức khỏe, vitamin tăng cường sức khỏe.</p>
                   </div>
-                  <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+                  <!-- <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div> -->
               </div>
-              <p class="copyright">Company Name © 2018</p>
+              <p class="copyright">Hiệu thuốc số 09 © 20221</p>
           </div>
       </footer>
     </div>
@@ -410,8 +410,8 @@
       pages[index].addEventListener("click", () => {
         if (currentTab  >=2) {
           activePage.classList.toggle("active");
-          pages[currentTab - 1].classList.toggle("active");
-          activePage = pages[currentTab - 1];
+          pages[currentTab * 1 - 1].classList.toggle("active");
+          activePage = pages[currentTab * 1 - 1];
           currentTab--;
           setCurrentState(currentTab);
         }
@@ -421,8 +421,8 @@
       pages[index].addEventListener("click", () => {
         if (currentTab  < pages.length - 2) {
           activePage.classList.toggle("active");
-          pages[currentTab + 1].classList.toggle("active");
-          activePage = pages[currentTab + 1];
+          pages[currentTab * 1 + 1].classList.toggle("active");
+          activePage = pages[currentTab * 1 + 1];
           currentTab++;
           setCurrentState(currentTab);
         }

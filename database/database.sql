@@ -48,16 +48,16 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.NhanVien(
     TongThue FLOAT NOT NULL,
     TongTienHDN DECIMAL(15, 4) NOT NULL,
     NgayNhap DATE NOT NULL,
-    FOREIGN KEY(IDNhaPhanPhoi) REFERENCES QuanLyHieuThuoc.NhaPhanPhoi(IDNhaPhanPhoi),
-    FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien)
+    FOREIGN KEY(IDNhaPhanPhoi) REFERENCES QuanLyHieuThuoc.NhaPhanPhoi(IDNhaPhanPhoi) ON DELETE CASCADE,
+    FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien) ON DELETE CASCADE
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.ChiTietHoaDonNhap(
     IDChiTietHDN INT PRIMARY KEY AUTO_INCREMENT,
     IDHoaDonNhap INT NOT NULL,
     IDThuoc INT NOT NULL,
     SoLuong INT NOT NULL,
     GiaNhap DECIMAL(15, 4) NOT NULL,
-    FOREIGN KEY(IDHoaDonNhap) REFERENCES QuanLyHieuThuoc.HoaDonNhap(IDHoaDonNhap),
-    FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc)
+    FOREIGN KEY(IDHoaDonNhap) REFERENCES QuanLyHieuThuoc.HoaDonNhap(IDHoaDonNhap) ON DELETE CASCADE,
+    FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc) ON DELETE CASCADE
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.HoaDonXuat(
     IDHoaDonXuat INT PRIMARY KEY AUTO_INCREMENT,
     IDKhachHang INT NOT NULL,
@@ -66,13 +66,13 @@ CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.NhanVien(
     TongTienThuoc DECIMAL(15, 4) NOT NULL,
     TongThue FLOAT NOT NULL,
     TongTienHDX DECIMAL(15, 4) NOT NULL,
-    FOREIGN KEY(IDKhachHang) REFERENCES QuanLyHieuThuoc.KhachHang(IDKhachHang),
-    FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien)
+    FOREIGN KEY(IDKhachHang) REFERENCES QuanLyHieuThuoc.KhachHang(IDKhachHang) ON DELETE CASCADE,
+    FOREIGN KEY(IDNhanVien) REFERENCES QuanLyHieuThuoc.NhanVien(IDNhanVien) ON DELETE CASCADE
 ); CREATE TABLE IF NOT EXISTS QuanLyHieuThuoc.ChiTietHoaDonXuat(
     IDChiTietHDX INT PRIMARY KEY AUTO_INCREMENT,
     IDHoaDonXuat INT NOT NULL,
     IDThuoc INT NOT NULL,
     SoLuong INT NOT NULL,
-    FOREIGN KEY(IDHoaDonXuat) REFERENCES QuanLyHieuThuoc.HoaDonXuat(IDHoaDonXuat),
-    FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc)
+    FOREIGN KEY(IDHoaDonXuat) REFERENCES QuanLyHieuThuoc.HoaDonXuat(IDHoaDonXuat) ON DELETE CASCADE,
+    FOREIGN KEY(IDThuoc) REFERENCES QuanLyHieuThuoc.Thuoc(IDThuoc) ON DELETE CASCADE
 );

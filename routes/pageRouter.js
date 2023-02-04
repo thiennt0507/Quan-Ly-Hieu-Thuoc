@@ -18,12 +18,12 @@ const router = express.Router();
 router.route("/homepage").get(getHomePage);
 router.route("/managepage").get(getManagePage);
 router.route("/sellpage").get(getSellPage);
-router.route("/importpage").get(checkRole, restrictTo(1), getImportPage);
+router.route("/importpage").get(getImportPage);
 router.route("/clientspage").get(getClientsPage);
 router.route("/userspage").get(checkRole, restrictTo(1), getUsersPage);
 router
   .route("/statisticalpage")
-  .get(checkRole, restrictTo(1,2), getStatisticalPage);
+  .get(checkRole, restrictTo(1, 2), getStatisticalPage);
 router.route("/").get(getLoginPage);
 router
   .route("/distributorspage")

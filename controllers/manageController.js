@@ -121,10 +121,7 @@ const changeQuantityDrug = (req, res) => {
 };
 
 const deleteDrug = async (req, res) => {
-  const query = `delete chitiethoadonxuat, chitiethoadonnhap, thuoc from chitiethoadonxuat
-  LEFT join chitiethoadonnhap on chitiethoadonxuat.IDThuoc = chitiethoadonnhap.IDThuoc
-  left join thuoc on chitiethoadonxuat.IDThuoc = thuoc.IDThuoc
-  where chitiethoadonxuat.IDThuoc = ${req.params.id}`;
+  const query = `delete from thuoc where IDThuoc = ${req.params.id}`;
   connection.query(query, (err, result) => {
     if (err) {
       throw new Error(err);
