@@ -28,7 +28,8 @@ body {
 }
 
 .topnav a.active {
-  background-color: #04aa6d;
+  /* background-color: #04aa6d; */
+  background-color: royalblue;
   color: white;
 }
 
@@ -81,7 +82,7 @@ body {
 
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-  background-color: #04aa6d;
+  background-color: royalblue;
 }
 
 .dropdown-content {
