@@ -49,6 +49,7 @@ const createHDN = async (req, res) => {
     `);
     return result;
   };
+
   const data_2 = async (id) => {
     const result =
       await query(`select hoadonnhap.NgayNhap , hoadonnhap.IDHoaDonNhap, nhanvien.HoTen, nhaphanphoi.TenNPP, nhaphanphoi.DiaChi, nhaphanphoi.Fax, nhaphanphoi.Email , hoadonnhap.TongThue as Thue, hoadonnhap.TongTienHDN as TongTien from hoadonnhap

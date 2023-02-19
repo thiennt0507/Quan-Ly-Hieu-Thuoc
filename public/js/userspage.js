@@ -126,17 +126,15 @@ for (let edit of listEdit) {
     editBirth.value = `${date[2]}-${date[1] >= 10 ? date[1] : "0" + date[1]}-${
       date[0] >= 10 ? date[0] : "0" + date[0]
     }`;
-    // editBirth.value = data.NgaySinh.slice(0, 10);
     editPhone.value = data.DienThoai;
-    editRole.value = data.ChucVu == 1 ? "Admin" : "Staff";
+    editRole.value = data.ChucVu;
 
     editSubmit.onclick = () => {
       if (
         editName.value &&
         editUserName.value &&
         editPassword.value &&
-        (editRole.value.toLowerCase().trim() == "staff" ||
-          editRole.value.toLowerCase().trim() == "admin") &&
+        editRole.value &&
         editAddress.value &&
         editBirth.value &&
         editPhone.value &&
@@ -152,7 +150,7 @@ for (let edit of listEdit) {
             NgaySinh: editBirth.value,
             Email: editEmail.value,
             DienThoai: editPhone.value,
-            ChucVu: editRole.value.toLowerCase().trim() == "admin" ? 1 : 2,
+            ChucVu: editRole.value,
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -161,6 +159,8 @@ for (let edit of listEdit) {
           .then((res) => console.log(res))
           .catch((err) => console.log(err));
         window.location.reload();
+      } else {
+        alert("error");
       }
     };
   });
@@ -199,8 +199,7 @@ addUser.addEventListener("click", async () => {
     addBirth.value &&
     addPhone.value &&
     validateEmail(addEmail.value) &&
-    (addRole.value.toLowerCase().trim() == "staff" ||
-      addRole.value.toLowerCase().trim() == "admin")
+    addRole.value
   ) {
     fetch(`http://localhost:3000/userspage/users`, {
       method: "POST",
@@ -212,7 +211,7 @@ addUser.addEventListener("click", async () => {
         NgaySinh: addBirth.value,
         Email: addEmail.value,
         DienThoai: addPhone.value,
-        ChucVu: addRole.value.toLowerCase().trim() == "admin" ? 1 : 0,
+        ChucVu: addRole.value,
       }),
       headers: {
         Accept: "application/json",

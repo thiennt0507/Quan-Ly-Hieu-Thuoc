@@ -23,7 +23,7 @@
   
   
       <!-- search -->
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
       <!--  -->
@@ -193,7 +193,11 @@
                 </div>
                 <div class="form-group">
                   <label>Chức vụ</label>
-                  <input type="input" placeholder="Admin or Staff" class="form-control"required>
+                  <!-- <input type="input" placeholder="Admin or Staff" class="form-control"required> -->
+                  <select id="select-state" class="form-control" placeholder="Chọn nhà phân phối">
+                      <option value="1">Admin</option>
+                      <option value="2">Staff</option>
+                  </select>
                 </div>					
               </div>
               <div class="modal-footer">
@@ -244,7 +248,10 @@
                 </div>
                 <div class="form-group">
                   <label>Chức vụ</label>
-                  <input type="input" placeholder="Admin or Staff" class="form-control"required>
+                  <select id="select-state" class="form-control" placeholder="Chọn nhà phân phối">
+                    <option value="1">Admin</option>
+                    <option value="2">Staff</option>
+                </select>
                 </div>					
               </div>
               <div class="modal-footer">

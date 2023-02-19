@@ -1,6 +1,5 @@
 const express = require("express");
 const session = require("express-session");
-// const cookieParser = require("cookie-parser");
 const connection = require("./database/connectdb");
 const path = require("path");
 

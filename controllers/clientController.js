@@ -1,4 +1,5 @@
 const connection = require("../database/connectdb");
+
 const getAllClients = (req, res) => {
   connection.query("SELECT * FROM khachhang", (err, result) => {
     if (err) {
